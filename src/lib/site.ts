@@ -12,9 +12,25 @@ export const site = {
   location: "Buenos Aires, Argentina",
   email: "vcpdesign@outlook.com.ar",
   phoneDisplay: "+54 9 11 5562-5597",
-  url: "https://vcpdesign.com",
   founded: 2026,
 } as const;
+
+/**
+ * Dominio del sitio. De acá salen la URL canónica, el sitemap y las etiquetas
+ * Open Graph — o sea, la tarjeta que se ve cuando alguien comparte el link.
+ *
+ * Se resuelve en cascada para que nunca apunte a un dominio que no existe:
+ *   1. `NEXT_PUBLIC_SITE_URL` — el dominio propio, cuando lo tengas. Se carga
+ *      como variable de entorno en Vercel y manda sobre todo lo demás.
+ *   2. La URL de producción que Vercel asigna sola (vcp-design.vercel.app).
+ *   3. localhost, en desarrollo.
+ */
+export const siteUrl = (
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : "http://localhost:3000")
+).replace(/\/+$/, "");
 
 export const whatsapp = {
   number: "5491155625597",

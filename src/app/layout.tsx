@@ -8,7 +8,7 @@ import { Nav } from "@/components/Nav";
 import { PreloaderGate } from "@/components/Preloader";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { WhatsAppFab } from "@/components/WhatsAppFab";
-import { site } from "@/lib/site";
+import { site, siteUrl } from "@/lib/site";
 
 /**
  * Una sola superfamilia. El contraste tipográfico lo da el eje de ancho de
@@ -33,7 +33,7 @@ const description =
   "Estudio de software en Buenos Aires. Diseñamos y construimos aplicaciones móviles, plataformas web y productos SaaS de punta a punta.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(site.url),
+  metadataBase: new URL(siteUrl),
   title: {
     default: `${site.name} — Apps, Web y SaaS a medida`,
     template: `%s · ${site.name}`,
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "es_AR",
-    url: site.url,
+    url: siteUrl,
     siteName: site.name,
     title: `${site.name} — Apps, Web y SaaS a medida`,
     description,
