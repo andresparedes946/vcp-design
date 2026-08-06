@@ -160,9 +160,9 @@ export const projects: Project[] = [
       "Fichaje con código QR y DNI para las 20 empleadas de un jardín de infantes. La dirección ve en el momento quién llegó, quién falta y cómo viene el mes en horas y sueldos.",
     metric: { value: "-50%", label: "tiempo de administración" },
     stack: ["Next.js", "Supabase", "PWA"],
-    // Para mostrar la captura: guardala como
-    // public/proyectos/jardincontrol.png y descomentá la línea de abajo.
-    // image: "/proyectos/jardincontrol.png",
+    // Captura con datos de prueba, encuadrada a 16:10 sobre el fondo del
+    // propio dashboard. Para reemplazarla, pisá el archivo con la nueva.
+    image: "/proyectos/jardincontrol.png",
     accent: "#7c6cf0",
     url: "https://jardin-control.vercel.app",
     requiresAuth: true,

@@ -11,21 +11,22 @@ import { useSiteReady } from "../Preloader";
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 /**
- * Chevron a escala de página: los mismos del isologo, estirados hasta la
- * altura del titular para que lo enmarquen como un paréntesis tipográfico.
+ * Chevron que flanquea el titular: el mismo glifo del isologo.
  *
- * `preserveAspectRatio="none"` deja que el glifo se alargue con el bloque —que
- * cambia de alto según el viewport— y `vectorEffect="non-scaling-stroke"`
- * impide que ese estirado engorde el trazo. El trazo se dibuja al cargar.
+ * Conserva su proporción (~1:2,3) y va centrado verticalmente. Estirarlo hasta
+ * la altura del titular vuelve el ángulo tan agudo que el glifo degenera en una
+ * barra diagonal y deja de leerse como paréntesis — un chevron, a diferencia de
+ * un corchete, no se puede alargar sin perder su forma. El trazo se dibuja al
+ * cargar.
  */
 function Chevron({ side, play }: { side: "left" | "right"; play: boolean }) {
-  const d = side === "left" ? "M32 4 L6 50 L32 96" : "M8 4 L34 50 L8 96";
+  const d = side === "left" ? "M30 6 L8 46 L30 86" : "M10 6 L32 46 L10 86";
 
   return (
     <svg
-      viewBox="0 0 40 100"
-      preserveAspectRatio="none"
-      className="h-full w-full overflow-visible"
+      viewBox="0 0 40 92"
+      preserveAspectRatio="xMidYMid meet"
+      className="h-auto w-full overflow-visible"
       aria-hidden="true"
     >
       <defs>
@@ -39,10 +40,9 @@ function Chevron({ side, play }: { side: "left" | "right"; play: boolean }) {
         d={d}
         fill="none"
         stroke={`url(#hero-chev-${side})`}
-        strokeWidth={3}
+        strokeWidth={3.4}
         strokeLinecap="round"
         strokeLinejoin="round"
-        vectorEffect="non-scaling-stroke"
         initial={{ pathLength: 0, opacity: 0 }}
         animate={play ? { pathLength: 1, opacity: 1 } : {}}
         transition={{
@@ -96,7 +96,7 @@ export function Hero() {
 
         {/* Titular entre los chevrons de la marca */}
         <div className="mt-9 grid grid-cols-1 items-stretch gap-x-6 md:mt-12 md:grid-cols-[auto_minmax(0,1fr)_auto] lg:gap-x-10">
-          <div className="hidden py-2 md:block md:w-[clamp(1.9rem,3.4vw,3.25rem)]">
+          <div className="hidden self-center md:block md:w-[clamp(2.2rem,4vw,3.9rem)]">
             <Chevron side="left" play={ready} />
           </div>
 
@@ -110,7 +110,7 @@ export function Hero() {
             </span>
           </h1>
 
-          <div className="hidden py-2 md:block md:w-[clamp(1.9rem,3.4vw,3.25rem)]">
+          <div className="hidden self-center md:block md:w-[clamp(2.2rem,4vw,3.9rem)]">
             <Chevron side="right" play={ready} />
           </div>
         </div>
