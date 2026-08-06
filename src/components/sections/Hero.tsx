@@ -102,7 +102,14 @@ export function Hero() {
 
           <h1 className="t-display text-[clamp(2.6rem,7.4vw,6.1rem)] text-chrome">
             <WordReveal text="Del problema al producto" play={ready} delay={0.55} />{" "}
-            <span className="t-chrome">
+            {/*
+              `inline-block` no es cosmético: el degradado se pinta con
+              `background-clip: text`, y siendo un span en línea con hijos que
+              llevan `overflow: hidden`, en pantallas angostas la caja de fondo
+              se colapsaba y el texto quedaba invisible — justo la palabra que
+              sostiene el titular. Con caja propia, el degradado siempre pinta.
+            */}
+            <span className="t-chrome inline-block">
               <WordReveal text="en días," play={ready} delay={0.85} />
             </span>{" "}
             <span className="text-muted/85">
