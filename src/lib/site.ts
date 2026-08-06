@@ -106,6 +106,20 @@ export const services: Service[] = [
     ],
     span: "4–6 semanas",
   },
+  {
+    id: "sistemas",
+    index: "SISTEMAS",
+    title: "Sistemas y automatizaciones",
+    summary:
+      "Software interno para que tu equipo deje de hacer a mano lo que puede hacerse solo: gestión, portales para clientes y tareas que se ejecutan sin que nadie las toque.",
+    deliverables: [
+      "ERP y sistemas de gestión a medida",
+      "Portales para clientes y proveedores",
+      "Automatización de tareas repetitivas",
+      "Integraciones entre sistemas y reportes",
+    ],
+    span: "2–4 semanas",
+  },
 ];
 
 /* ── Proyectos ─────────────────────────────────────────────────────────── */

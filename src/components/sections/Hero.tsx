@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
-import { site, whatsappHref } from "@/lib/site";
+import { services, site, whatsappHref } from "@/lib/site";
 import { WordReveal } from "../Reveal";
 import { MagneticLink } from "../Magnetic";
 import { useSiteReady } from "../Preloader";
@@ -163,10 +163,12 @@ export function Hero() {
         >
           <div className="rule" />
           <div className="mt-6 flex flex-wrap items-center justify-between gap-6">
+            {/* Se lee de los servicios: una sola fuente de verdad con la
+                sección de abajo, para que no prometa algo que ahí no está. */}
             <ul className="flex flex-wrap items-center gap-x-7 gap-y-3">
-              {["Apps móviles", "Plataformas web", "Productos SaaS"].map((item) => (
-                <li key={item} className="t-label text-muted">
-                  {item}
+              {services.map((service) => (
+                <li key={service.id} className="t-label text-muted">
+                  {service.title}
                 </li>
               ))}
             </ul>

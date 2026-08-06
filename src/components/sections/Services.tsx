@@ -17,6 +17,18 @@ import { SpotlightCard } from "../SpotlightCard";
  * Los códigos APPS / WEB / SAAS vienen del propio isologo — son la bajada de
  * la marca, no una etiqueta inventada.
  */
+/**
+ * El titular nombra la cantidad de servicios, así que se deriva de los datos:
+ * si mañana se agrega o se saca una fila, el texto no queda mintiendo.
+ */
+const NUMERALES = ["", "Una", "Dos", "Tres", "Cuatro", "Cinco", "Seis", "Siete"];
+
+function contarFormas(n: number) {
+  const palabra = NUMERALES[n];
+  if (!palabra) return `${n} formas de construir.`;
+  return n === 1 ? "Una forma de construir." : `${palabra} formas de construir.`;
+}
+
 export function Services() {
   return (
     <Section id="servicios">
@@ -25,7 +37,7 @@ export function Services() {
         meta={`${services.length} líneas de trabajo`}
         title={
           <>
-            Tres formas de construir.{" "}
+            {contarFormas(services.length)}{" "}
             <span className="text-muted/70">Una sola manera de trabajar.</span>
           </>
         }
