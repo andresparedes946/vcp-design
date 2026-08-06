@@ -128,12 +128,13 @@ export const projects: Project[] = [
   {
     id: "nexo",
     name: "JardinControl",
-    category: "SaaS · Operaciones",
+    category: "PWA · App web",
     year: "2026",
     summary:
       "Plataforma de fichaje y métricas para un jardín, con rol de administrador para control de empleados.",
-    metric: { value: "-38%", label: "tiempo por entrega" },
-    stack: ["Next.js", "PostgreSQL", "Mapbox"],
+    // TODO: confirmar el número real. "-38%" venía del proyecto de ejemplo.
+    metric: { value: "-38%", label: "tiempo de carga horaria" },
+    stack: ["Next.js", "Supabase", "PWA"],
     accent: "#7c6cf0",
     placeholder: true,
   },
@@ -147,30 +148,6 @@ export const projects: Project[] = [
     metric: { value: "24k", label: "turnos gestionados" },
     stack: ["Expo", "Supabase", "Stripe"],
     accent: "#a99bff",
-    placeholder: true,
-  },
-  {
-    id: "meridiano",
-    name: "Meridiano Capital",
-    category: "Web · Fintech",
-    year: "2024",
-    summary:
-      "Sitio institucional y simulador de inversiones para una gestora de fondos. Cálculo en tiempo real sobre datos de mercado.",
-    metric: { value: "98", label: "Lighthouse performance" },
-    stack: ["Next.js", "TypeScript", "Vercel"],
-    accent: "#4fa8f0",
-    placeholder: true,
-  },
-  {
-    id: "taller",
-    name: "Taller Norte",
-    category: "SaaS · Comercio",
-    year: "2024",
-    summary:
-      "Sistema de presupuestos y órdenes de trabajo para talleres mecánicos. Hoy lo usan doce sucursales con facturación por suscripción.",
-    metric: { value: "12", label: "sucursales activas" },
-    stack: ["React", "Node.js", "Mercado Pago"],
-    accent: "#8b7ff0",
     placeholder: true,
   },
 ];
@@ -251,9 +228,9 @@ export const steps: Step[] = [
 
 export const stats = [
   { value: "5+", label: "Productos entregados" },
-  { value: "4", label: "Años construyendo" },
-  { value: "94%", label: "Clientes que vuelven" },
-  { value: "5d", label: "Al primer entregable" },
+  { value: "1", label: "Año construyendo" },
+  { value: "94%", label: "Clientes que aceptan" },
+  { value: "7d", label: "Al primer entregable" },
 ];
 
 export const principles = [
@@ -288,27 +265,13 @@ export const testimonials: Testimonial[] = [
     role: "Directora, Jardín MF",
     placeholder: true,
   },
-  {
-    quote:
-      "Veníamos de dos agencias que nos dejaron el proyecto por la mitad. Acá tuvimos entregas cada dos semanas y un precio que no se movió del presupuesto inicial.",
-    author: "Diego Sarmiento",
-    role: "Director de operaciones, Nexo Logística",
-    placeholder: true,
-  },
-  {
-    quote:
-      "El simulador que armaron es hoy la principal fuente de contactos calificados del sitio. Cargó rápido desde el primer día y nunca se cayó.",
-    author: "Lucía Bentancur",
-    role: "Marketing, Meridiano Capital",
-    placeholder: true,
-  },
 ];
 
 /* ── Contacto ──────────────────────────────────────────────────────────── */
 
 export const budgets = [
-  "Menos de USD 1.000",
+  "Menos de $ 300.000",
   "Todavía no lo sé",
 ];
 
-export const projectTypes = ["App móvil", "Plataforma web", "Producto SaaS", "Otro"];
+export const projectTypes = ["App móvil", "Plataforma web", "Producto SaaS", "PWA", "Sistema ERP", "Portales para clientes", "Otros"];

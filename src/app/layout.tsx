@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, JetBrains_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 import { AmbientBackground } from "@/components/AmbientBackground";
@@ -93,6 +94,13 @@ export default function RootLayout({
           <main id="contenido">{children}</main>
           <WhatsAppFab />
         </PreloaderGate>
+
+        {/*
+          Métrica de visitas. Sin cookies y sin datos personales, así que no
+          necesita banner de consentimiento. Sólo emite en Vercel: en
+          desarrollo no hace nada.
+        */}
+        <Analytics />
       </body>
     </html>
   );

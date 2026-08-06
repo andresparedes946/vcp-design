@@ -138,6 +138,24 @@ Si más adelante querés recibirlo por correo, reemplazá el `onSubmit` de
 `src/components/sections/Contact.tsx` por un `fetch` a un endpoint (Resend,
 Formspree o un Route Handler propio).
 
+### Métricas
+
+`@vercel/analytics` está montado en el layout. Sin cookies y sin datos
+personales, así que **no necesita banner de consentimiento**. En desarrollo no
+envía nada; empieza a registrar al desplegar.
+
+Hay que activarlo una vez en el dashboard: proyecto → pestaña **Analytics** →
+Enable. Después de eso se ve cuántas visitas llegan y por qué ruta entraron.
+
+Para medir además Core Web Vitals reales de los visitantes:
+
+```bash
+npm i @vercel/speed-insights
+```
+
+y agregar `<SpeedInsights />` junto a `<Analytics />` en
+`src/app/layout.tsx`, importándolo de `@vercel/speed-insights/next`.
+
 ### Rendimiento y accesibilidad
 
 - El canvas de partículas limita el DPR a 1.5, escala la densidad al área de la
