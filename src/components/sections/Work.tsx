@@ -7,15 +7,28 @@ import { Reveal } from "../Reveal";
 import { SpotlightCard } from "../SpotlightCard";
 import { ProjectVisual } from "../ProjectVisual";
 
-/** Ritmo asimétrico: 7-5 / 5-7. Evita la grilla uniforme de cuatro iguales. */
-const SPANS = ["lg:col-span-7", "lg:col-span-5", "lg:col-span-5", "lg:col-span-7"];
+/**
+ * Ancho de cada tarjeta sobre una grilla de 12.
+ *
+ * El ritmo por defecto es asimétrico —7-5 / 5-7— para que no se lea como una
+ * grilla de iguales. Pero la fila siempre tiene que cerrar en 12: si la
+ * cantidad de proyectos es impar, el último ocupa el ancho completo en lugar
+ * de dejar un hueco. Con un solo proyecto, eso lo convierte en un destacado.
+ */
+function spanFor(index: number, total: number) {
+  const isLoneLast = total % 2 === 1 && index === total - 1;
+  if (isLoneLast) return "lg:col-span-12";
+  return index % 4 === 0 || index % 4 === 3 ? "lg:col-span-7" : "lg:col-span-5";
+}
 
 export function Work() {
+  const total = projects.length;
+
   return (
     <Section id="proyectos">
       <SectionHeader
         label="Proyectos"
-        meta={`${projects.length} casos`}
+        meta={total === 1 ? "1 caso" : `${total} casos`}
         title={
           <>
             Software que ya está{" "}
@@ -26,17 +39,32 @@ export function Work() {
       />
 
       <div className="mt-16 grid grid-cols-1 gap-5 md:mt-20 lg:grid-cols-12 lg:gap-6">
-        {projects.map((project, i) => (
+        {projects.map((project, i) => {
+          // A ancho completo la portada quedaría enorme y el texto perdido
+          // debajo: ahí conviene poner visual y contenido lado a lado.
+          const wide = spanFor(i, total) === "lg:col-span-12";
+
+          return (
           <Reveal
             key={project.id}
             direction="up"
             delay={(i % 2) * 0.1}
-            className={SPANS[i % SPANS.length]}
+            className={spanFor(i, total)}
           >
-            <SpotlightCard className="group glass relative flex h-full flex-col overflow-hidden rounded-2xl p-4 transition-transform duration-500 hover:-translate-y-1 sm:p-5">
+            <SpotlightCard
+              className={`group glass relative h-full overflow-hidden rounded-2xl p-4 transition-transform duration-500 hover:-translate-y-1 sm:p-5 ${
+                wide
+                  ? "lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center lg:gap-8"
+                  : "flex flex-col"
+              }`}
+            >
               <ProjectVisual project={project} />
 
-              <div className="flex flex-1 flex-col px-1.5 pb-1 pt-6 sm:px-2">
+              <div
+                className={`flex flex-1 flex-col px-1.5 pb-1 pt-6 sm:px-2 ${
+                  wide ? "lg:pt-0" : ""
+                }`}
+              >
                 <div className="flex items-center justify-between gap-4">
                   <span className="t-label text-peri">{project.category}</span>
                   <span className="t-mono text-[0.72rem] text-faint">
@@ -80,7 +108,8 @@ export function Work() {
               </div>
             </SpotlightCard>
           </Reveal>
-        ))}
+          );
+        })}
       </div>
 
       <Reveal direction="up" delay={0.1}>

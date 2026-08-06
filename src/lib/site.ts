@@ -138,18 +138,6 @@ export const projects: Project[] = [
     accent: "#7c6cf0",
     placeholder: true,
   },
-  {
-    id: "aurea",
-    name: "Áurea Salud",
-    category: "App móvil · Salud",
-    year: "2025",
-    summary:
-      "Turnos, historia clínica y recetas digitales en una app para una red de seis consultorios. Los pacientes reservan sin llamar por teléfono.",
-    metric: { value: "24k", label: "turnos gestionados" },
-    stack: ["Expo", "Supabase", "Stripe"],
-    accent: "#a99bff",
-    placeholder: true,
-  },
 ];
 
 /* ── Stack ─────────────────────────────────────────────────────────────── */
@@ -229,7 +217,7 @@ export const steps: Step[] = [
 export const stats = [
   { value: "5+", label: "Productos entregados" },
   { value: "1", label: "Año construyendo" },
-  { value: "94%", label: "Clientes que aceptan" },
+  { value: "80%", label: "Clientes que nos eligen" },
   { value: "7d", label: "Al primer entregable" },
 ];
 
