@@ -30,8 +30,10 @@ const jetbrains = JetBrains_Mono({
   variable: "--font-jetbrains",
 });
 
+// Es lo que se lee en el resultado de Google y en la vista previa del enlace.
+// Google corta alrededor de los 160 caracteres: lo importante va primero.
 const description =
-  "Estudio de software en Buenos Aires. Diseñamos y construimos aplicaciones móviles, plataformas web y productos SaaS de punta a punta.";
+  "Estudio de software en Buenos Aires. Apps móviles, plataformas web, sistemas a medida y automatizaciones. Primeras entregas en días y precio cerrado.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

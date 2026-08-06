@@ -28,7 +28,7 @@ export function Footer() {
 
             <p className="t-body mt-6 max-w-xs text-[0.94rem] text-muted">
               {site.role} en {site.location}. Construimos apps móviles,
-              plataformas web y productos SaaS a medida.
+              plataformas web, sistemas a medida y automatizaciones.
             </p>
           </div>
 
