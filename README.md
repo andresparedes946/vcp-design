@@ -59,9 +59,18 @@ mientras llega. Proporción recomendada: **16:10**.
 
 ### Dominio
 
-`site.url` en `src/lib/site.ts` está en `https://vcpdesign.com`. Cambialo al
-dominio real: de ahí salen las URLs canónicas, el sitemap y las etiquetas Open
-Graph.
+De la URL del sitio salen la dirección canónica, el sitemap y las etiquetas
+Open Graph — o sea, la tarjeta que se ve cuando alguien comparte el link por
+WhatsApp o LinkedIn. **No hay que tocar código para configurarla.** `siteUrl`
+en `src/lib/site.ts` la resuelve en cascada:
+
+1. `NEXT_PUBLIC_SITE_URL`, si está cargada.
+2. La URL de producción que Vercel asigna sola (`vcp-design.vercel.app`).
+3. `http://localhost:3000` en desarrollo.
+
+Cuando tengas dominio propio, cargá la variable en Vercel → Settings →
+Environment Variables, entorno **Production**, y volvé a desplegar. Sin barra
+final. Ver `.env.example`.
 
 ---
 
@@ -142,16 +151,27 @@ Formspree o un Route Handler propio).
 
 ## Publicar
 
-**Vercel** (recomendado, es el mismo equipo que hace Next.js):
+Repositorio: <https://github.com/andresparedes946/vcp-design>
 
-```bash
-npx vercel
-```
+**Vercel** es el camino recomendado — es el mismo equipo que hace Next.js y el
+proyecto no necesita ninguna configuración extra.
+
+Conviene importarlo desde el dashboard y no desde la CLI: al quedar vinculado
+al repositorio, **cada `git push` a `main` despliega solo**, y cada rama genera
+una URL de vista previa para revisar cambios antes de publicarlos.
+
+1. Entrar a <https://vercel.com/new> con la cuenta de GitHub.
+2. Importar `andresparedes946/vcp-design`.
+3. No cambiar nada: Vercel detecta Next.js y usa `npm run build`.
+4. Deploy.
+
+Desde la CLI, si preferís: `npx vercel login` y después `npx vercel --prod`.
 
 Cualquier hosting con Node 18+ también sirve: `npm run build` y `npm run start`.
 
-Antes de publicar:
+### Antes de publicar
 
-1. Reemplazar proyectos, testimonios y números de ejemplo en `src/lib/site.ts`.
-2. Poner el dominio real en `site.url`.
-3. Confirmar el email de contacto (hoy: `andresparedes946@gmail.com`).
+1. Reemplazar proyectos, testimonios y números de ejemplo en `src/lib/site.ts`
+   (los marcados con `placeholder: true`).
+2. Confirmar el email de contacto (hoy: `vcpdesign@outlook.com.ar`).
+3. El dominio no requiere ningún cambio para desplegar — ver **Dominio** arriba.
