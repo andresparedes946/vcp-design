@@ -139,6 +139,14 @@ export type Project = {
   accent: string;
   /** Ruta a la captura dentro de /public. Sin ella se dibuja un panel generado. */
   image?: string;
+  /** Enlace público al producto. Sin él, la tarjeta no lleva a ningún lado. */
+  url?: string;
+  /**
+   * `true` cuando el producto exige cuenta para entrar. Se avisa en la tarjeta:
+   * mandar a alguien a una pantalla de login sin explicarle por qué se lee como
+   * un enlace roto, no como un sistema en producción.
+   */
+  requiresAuth?: boolean;
   placeholder?: boolean;
 };
 
@@ -154,6 +162,8 @@ export const projects: Project[] = [
     // o cuántos empleados fichan por día, agregalo acá y aparece en la tarjeta.
     stack: ["Next.js", "Supabase", "PWA"],
     accent: "#7c6cf0",
+    url: "https://jardin-control.vercel.app",
+    requiresAuth: true,
   },
 ];
 

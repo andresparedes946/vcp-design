@@ -73,12 +73,34 @@ export function Work() {
                 </div>
 
                 <h3 className="t-title mt-4 text-[clamp(1.5rem,2.4vw,2rem)] text-chrome">
-                  {project.name}
+                  {project.url ? (
+                    <a
+                      href={project.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      data-cursor="ABRIR"
+                      className="group/link inline-flex items-baseline gap-2.5 transition-colors duration-300 hover:text-peri"
+                    >
+                      {project.name}
+                      <ArrowUpRight
+                        className="h-[0.85em] w-[0.85em] shrink-0 self-center text-peri transition-transform duration-300 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
+                        strokeWidth={2.2}
+                      />
+                    </a>
+                  ) : (
+                    project.name
+                  )}
                 </h3>
 
                 <p className="t-body mt-3.5 max-w-xl text-[0.95rem] text-muted">
                   {project.summary}
                 </p>
+
+                {project.requiresAuth && (
+                  <p className="t-label mt-4 text-faint">
+                    Acceso privado · sistema interno del cliente
+                  </p>
+                )}
 
                 <div className="mt-7 flex flex-wrap items-end justify-between gap-6 border-t border-white/[0.06] pt-6">
                   {/*

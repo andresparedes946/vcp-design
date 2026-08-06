@@ -103,10 +103,10 @@ export function Hero() {
           <h1 className="t-display text-[clamp(2.6rem,7.4vw,6.1rem)] text-chrome">
             <WordReveal text="Del problema al producto" play={ready} delay={0.55} />{" "}
             <span className="t-chrome">
-              <WordReveal text="en semanas," play={ready} delay={0.85} />
+              <WordReveal text="en días," play={ready} delay={0.85} />
             </span>{" "}
             <span className="text-muted/85">
-              <WordReveal text="no en trimestres." play={ready} delay={1.0} />
+              <WordReveal text="no en meses." play={ready} delay={1.0} />
             </span>
           </h1>
 
