@@ -14,8 +14,11 @@ import type { Project } from "@/lib/site";
  */
 export function ProjectVisual({ project }: { project: Project }) {
   const [loaded, setLoaded] = useState(false);
+  const [failed, setFailed] = useState(false);
 
-  if (project.image) {
+  // Si la ruta apunta a un archivo que no está, se cae al panel generado. Sin
+  // esto el skeleton giraría para siempre: `onLoad` nunca llega a dispararse.
+  if (project.image && !failed) {
     return (
       <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-surface">
         {!loaded && <div className="skeleton absolute inset-0" />}
@@ -25,6 +28,7 @@ export function ProjectVisual({ project }: { project: Project }) {
           fill
           sizes="(max-width: 1024px) 100vw, 50vw"
           onLoad={() => setLoaded(true)}
+          onError={() => setFailed(true)}
           className={`object-cover transition-all duration-700 ${
             loaded ? "scale-100 opacity-100 blur-0" : "scale-105 opacity-0 blur-lg"
           } group-hover:scale-[1.04]`}

@@ -157,10 +157,12 @@ export const projects: Project[] = [
     category: "PWA · App web",
     year: "2026",
     summary:
-      "Plataforma de fichaje y métricas para un jardín, con rol de administrador para control de empleados.",
-    // Sin `metric` hasta tener el dato real: cuando sepas cuánto tiempo ahorró
-    // o cuántos empleados fichan por día, agregalo acá y aparece en la tarjeta.
+      "Fichaje con código QR y DNI para las 20 empleadas de un jardín de infantes. La dirección ve en el momento quién llegó, quién falta y cómo viene el mes en horas y sueldos.",
+    metric: { value: "-50%", label: "tiempo de administración" },
     stack: ["Next.js", "Supabase", "PWA"],
+    // Para mostrar la captura: guardala como
+    // public/proyectos/jardincontrol.png y descomentá la línea de abajo.
+    // image: "/proyectos/jardincontrol.png",
     accent: "#7c6cf0",
     url: "https://jardin-control.vercel.app",
     requiresAuth: true,
