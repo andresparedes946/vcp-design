@@ -116,7 +116,11 @@ export type Project = {
   category: string;
   year: string;
   summary: string;
-  metric: { value: string; label: string };
+  /**
+   * Resultado medible del proyecto. Es opcional a propósito: mejor no mostrar
+   * nada que inventar un número. Cuando tengas el dato real, agregalo.
+   */
+  metric?: { value: string; label: string };
   stack: string[];
   accent: string;
   /** Ruta a la captura dentro de /public. Sin ella se dibuja un panel generado. */
@@ -132,11 +136,10 @@ export const projects: Project[] = [
     year: "2026",
     summary:
       "Plataforma de fichaje y métricas para un jardín, con rol de administrador para control de empleados.",
-    // TODO: confirmar el número real. "-38%" venía del proyecto de ejemplo.
-    metric: { value: "-38%", label: "tiempo de carga horaria" },
+    // Sin `metric` hasta tener el dato real: cuando sepas cuánto tiempo ahorró
+    // o cuántos empleados fichan por día, agregalo acá y aparece en la tarjeta.
     stack: ["Next.js", "Supabase", "PWA"],
     accent: "#7c6cf0",
-    placeholder: true,
   },
 ];
 
@@ -217,7 +220,7 @@ export const steps: Step[] = [
 export const stats = [
   { value: "5+", label: "Productos entregados" },
   { value: "1", label: "Año construyendo" },
-  { value: "80%", label: "Clientes que nos eligen" },
+  { value: "4 de 5", label: "Clientes que nos eligen" },
   { value: "7d", label: "Al primer entregable" },
 ];
 
@@ -251,7 +254,6 @@ export const testimonials: Testimonial[] = [
       "Llegamos con una idea escrita en papel y a la semana teníamos la app en el jardín. Lo que más valoro es que nos dijeron que no a tres funciones que no hacían falta y con la rapidez que trabajaron.",
     author: "Sandra.C",
     role: "Directora, Jardín MF",
-    placeholder: true,
   },
 ];
 

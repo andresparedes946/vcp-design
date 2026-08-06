@@ -123,9 +123,9 @@ export function Hero() {
           className="mt-10 grid gap-10 md:mt-14 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:gap-16"
         >
           <p className="t-body max-w-xl text-[1.05rem] text-mist sm:text-[1.15rem]">
-            Diseñamos y desarrollamos aplicaciones móviles, plataformas web y
-            productos SaaS a medida. Entregas cada dos semanas, precio cerrado y el
-            código queda a tu nombre.
+            Apps móviles, plataformas web, sistemas internos, automatizaciones y
+            todo lo que tu operación necesite a medida. Primeras entregas en días,
+            precio cerrado y el código queda a tu nombre.
           </p>
 
           <div className="flex flex-wrap items-center gap-3">

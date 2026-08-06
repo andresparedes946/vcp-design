@@ -79,9 +79,9 @@ export function About() {
                   <div className="rule mt-8 w-full" />
 
                   <p className="t-body mt-8 max-w-xs text-[0.95rem] text-mist">
-                    Apps, web y SaaS. Las tres cosas las hacemos con el mismo
-                    criterio: que funcione, que se entienda y que se pueda
-                    mantener.
+                    Apps, sistemas a medida, plataformas web y automatizaciones.
+                    Todo con el mismo criterio: que funcione, que se entienda y
+                    que se pueda mantener.
                   </p>
 
                   <p className="t-label mt-7 text-faint">{site.location}</p>

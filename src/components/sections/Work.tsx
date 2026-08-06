@@ -81,18 +81,25 @@ export function Work() {
                 </p>
 
                 <div className="mt-7 flex flex-wrap items-end justify-between gap-6 border-t border-white/[0.06] pt-6">
-                  {/* El resultado, no la tecnología, es lo que se destaca. */}
-                  <div>
-                    <div
-                      className="t-display text-[2.4rem] leading-none"
-                      style={{ color: project.accent }}
-                    >
-                      {project.metric.value}
+                  {/*
+                    El resultado, no la tecnología, es lo que se destaca —
+                    cuando hay un resultado que mostrar. Si el proyecto todavía
+                    no tiene el dato medido, la fila queda sólo con el stack en
+                    vez de exhibir un número inventado.
+                  */}
+                  {project.metric && (
+                    <div>
+                      <div
+                        className="t-display text-[2.4rem] leading-none"
+                        style={{ color: project.accent }}
+                      >
+                        {project.metric.value}
+                      </div>
+                      <div className="t-label mt-2.5 text-faint">
+                        {project.metric.label}
+                      </div>
                     </div>
-                    <div className="t-label mt-2.5 text-faint">
-                      {project.metric.label}
-                    </div>
-                  </div>
+                  )}
 
                   <ul className="flex flex-wrap items-center gap-2">
                     {project.stack.map((tech) => (
