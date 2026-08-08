@@ -11,15 +11,19 @@ import {
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { LogoMark } from "./Logo";
 
-/** Duración mínima en pantalla: suficiente para leer la marca, no para aburrir. */
-const MIN_MS = 1700;
+/**
+ * Duración mínima en pantalla: alcanza para registrar la marca. Más que esto
+ * se siente como que el sitio tarda en cargar, sobre todo en el celular, donde
+ * la espera se percibe más larga que en el escritorio.
+ */
+const MIN_MS = 900;
 
 /**
  * Válvula de seguridad. Si `load` no llega —una imagen colgada, una fuente que
  * no resuelve— el sitio igual se muestra. Nunca dejar la puerta cerrada por un
  * recurso que no era imprescindible.
  */
-const MAX_MS = 6000;
+const MAX_MS = 3000;
 
 const ReadyContext = createContext(false);
 
@@ -100,7 +104,7 @@ export function PreloaderGate({ children }: { children: ReactNode }) {
             className="fixed inset-0 z-[200] flex items-center justify-center bg-void/92 backdrop-blur-2xl"
             initial={{ opacity: 1 }}
             exit={{ opacity: 0, scale: 1.08, filter: "blur(14px)" }}
-            transition={{ duration: 0.85, ease: [0.83, 0, 0.17, 1] }}
+            transition={{ duration: 0.7, ease: [0.83, 0, 0.17, 1] }}
           >
             {/* Halo detrás de la marca */}
             <motion.div

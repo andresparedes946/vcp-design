@@ -46,8 +46,8 @@ function Chevron({ side, play }: { side: "left" | "right"; play: boolean }) {
         initial={{ pathLength: 0, opacity: 0 }}
         animate={play ? { pathLength: 1, opacity: 1 } : {}}
         transition={{
-          pathLength: { duration: 1.5, delay: 0.5, ease: EASE },
-          opacity: { duration: 0.4, delay: 0.5 },
+          pathLength: { duration: 1, delay: 0.22, ease: EASE },
+          opacity: { duration: 0.3, delay: 0.22 },
         }}
       />
     </svg>
@@ -77,7 +77,7 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           animate={ready ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.3, ease: EASE }}
+          transition={{ duration: 0.6, delay: 0.08, ease: EASE }}
           className="flex flex-wrap items-center gap-x-4 gap-y-2"
         >
           <span className="glass inline-flex items-center gap-2.5 rounded-full py-1.5 pl-2.5 pr-4">
@@ -101,7 +101,7 @@ export function Hero() {
           </div>
 
           <h1 className="t-display text-[clamp(2.6rem,7.4vw,6.1rem)] text-chrome">
-            <WordReveal text="Del problema al producto" play={ready} delay={0.55} />{" "}
+            <WordReveal text="Del problema al producto" play={ready} delay={0.16} />{" "}
             {/*
               `inline-block` no es cosmético: el degradado se pinta con
               `background-clip: text`, y siendo un span en línea con hijos que
@@ -110,10 +110,10 @@ export function Hero() {
               sostiene el titular. Con caja propia, el degradado siempre pinta.
             */}
             <span className="t-chrome inline-block">
-              <WordReveal text="en días," play={ready} delay={0.85} />
+              <WordReveal text="en días," play={ready} delay={0.32} />
             </span>{" "}
             <span className="text-muted/85">
-              <WordReveal text="no en meses." play={ready} delay={1.0} />
+              <WordReveal text="no en meses." play={ready} delay={0.44} />
             </span>
           </h1>
 
@@ -126,7 +126,7 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={ready ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.9, delay: 1.3, ease: EASE }}
+          transition={{ duration: 0.7, delay: 0.6, ease: EASE }}
           className="mt-10 grid gap-10 md:mt-14 md:grid-cols-[minmax(0,1fr)_auto] md:items-end md:gap-16"
         >
           <p className="t-body max-w-xl text-[1.05rem] text-mist sm:text-[1.15rem]">
@@ -165,7 +165,7 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={ready ? { opacity: 1 } : {}}
-          transition={{ duration: 1, delay: 1.6 }}
+          transition={{ duration: 0.7, delay: 0.78 }}
           className="mt-16 md:mt-24"
         >
           <div className="rule" />

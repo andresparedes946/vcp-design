@@ -26,7 +26,7 @@ export function WhatsAppFab() {
       <motion.div
         initial={{ opacity: 0, scale: 0.4, y: 28 }}
         animate={ready ? { opacity: 1, scale: 1, y: 0 } : {}}
-        transition={{ delay: 0.7, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ delay: 0.45, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         className="relative"
       >
         {/* Pulso: dos anillos desfasados, muy tenues. */}

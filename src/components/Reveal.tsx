@@ -174,7 +174,7 @@ export function WordReveal({
             className="inline-block"
             initial={{ y: "108%", opacity: 0 }}
             animate={play ? { y: "0%", opacity: 1 } : { y: "108%", opacity: 0 }}
-            transition={{ duration: 1, delay: delay + i * 0.075, ease: EASE }}
+            transition={{ duration: 0.65, delay: delay + i * 0.05, ease: EASE }}
           >
             {word}
             {i < words.length - 1 && " "}
