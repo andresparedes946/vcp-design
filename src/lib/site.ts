@@ -147,6 +147,12 @@ export type Project = {
    * un enlace roto, no como un sistema en producción.
    */
   requiresAuth?: boolean;
+  /**
+   * Texto del aviso de acceso. Por defecto se asume un sistema interno de un
+   * cliente; los productos donde cualquiera puede abrirse una cuenta necesitan
+   * decir otra cosa, o el aviso pasa a ser mentira.
+   */
+  authNote?: string;
   placeholder?: boolean;
 };
 
@@ -166,6 +172,34 @@ export const projects: Project[] = [
     accent: "#7c6cf0",
     url: "https://jardin-control.vercel.app",
     requiresAuth: true,
+  },
+  {
+    id: "kinetic",
+    name: "KineTic",
+    category: "SaaS · App web",
+    year: "2026",
+    summary:
+      "Consultorio digital para kinesiólogos. Pacientes, historia clínica, tratamientos, agenda y sesiones en un solo lugar: la sesión se carga desde la camilla y el informe en PDF para el médico sale solo.",
+    stack: ["Next.js", "Supabase", "PostgreSQL", "PWA"],
+    image: "/proyectos/kinetic.png",
+    accent: "#38bdf8",
+    url: "https://kinetic-salud.vercel.app/dashboard",
+    requiresAuth: true,
+    authNote: "Requiere cuenta · prueba gratuita",
+  },
+  {
+    id: "profit",
+    name: "ProFit",
+    category: "PWA · App web",
+    year: "2026",
+    summary:
+      "Seguimiento de comidas, macros, peso y ayuno intermitente. Escribís o decís lo que comiste —«dos huevos, dos tostadas y una banana»— y la app reconoce los alimentos y calcula las calorías, sin buscar uno por uno en una planilla.",
+    stack: ["Next.js", "Supabase", "IA"],
+    image: "/proyectos/profit.png",
+    accent: "#34d399",
+    url: "https://profit-2026.vercel.app/inicio",
+    requiresAuth: true,
+    authNote: "Requiere cuenta · registro gratuito",
   },
 ];
 

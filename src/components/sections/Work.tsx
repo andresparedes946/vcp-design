@@ -98,7 +98,8 @@ export function Work() {
 
                 {project.requiresAuth && (
                   <p className="t-label mt-4 text-faint">
-                    Acceso privado · sistema interno del cliente
+                    {project.authNote ??
+                      "Acceso privado · sistema interno del cliente"}
                   </p>
                 )}
 
