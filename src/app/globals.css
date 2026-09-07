@@ -55,7 +55,13 @@
     font-variation-settings: "wdth" 100;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
+    /*
+      `clip` y no `hidden`: los dos recortan el desborde horizontal, pero
+      `hidden` convierte al body en contenedor de scroll y eso deja sin efecto
+      cualquier `position: sticky` de adentro — el apilado de proyectos, sin ir
+      más lejos. `clip` recorta sin crear scrollport.
+    */
+    overflow-x: clip;
   }
 
   ::selection {

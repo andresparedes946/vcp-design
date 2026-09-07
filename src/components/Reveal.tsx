@@ -3,6 +3,7 @@
 import { useRef, type ReactNode } from "react";
 import {
   motion,
+  useReducedMotion,
   useScroll,
   useSpring,
   useTransform,
@@ -46,6 +47,13 @@ export function Reveal({
   duration?: number;
   blur?: boolean;
 }) {
+  // La regla de `prefers-reduced-motion` en globals.css sólo anula animaciones
+  // y transiciones de CSS. Motion anima por JavaScript y se la saltea entera,
+  // así que la preferencia hay que respetarla acá: si no, el revelado más
+  // repetido del sitio es justo el único que no se apaga.
+  const reduced = useReducedMotion();
+  if (reduced) return <div className={className}>{children}</div>;
+
   return (
     <motion.div
       className={className}
@@ -88,6 +96,9 @@ export function Stagger({
   className?: string;
   amount?: number;
 }) {
+  const reduced = useReducedMotion();
+  if (reduced) return <div className={className}>{children}</div>;
+
   return (
     <motion.div
       className={className}
@@ -108,6 +119,9 @@ export function StaggerItem({
   children: ReactNode;
   className?: string;
 }) {
+  const reduced = useReducedMotion();
+  if (reduced) return <div className={className}>{children}</div>;
+
   return (
     <motion.div className={className} variants={staggerChild}>
       {children}
@@ -128,6 +142,10 @@ export function Parallax({
   className?: string;
   speed?: number;
 }) {
+  // Los hooks se llaman siempre, antes de cualquier rama: `useReducedMotion`
+  // reacciona a un media query y puede cambiar en caliente, así que salir
+  // antes de `useScroll` rompería el orden de hooks entre renders.
+  const reduced = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -135,6 +153,8 @@ export function Parallax({
   });
   const raw = useTransform(scrollYProgress, [0, 1], [speed, -speed]);
   const y = useSpring(raw, { stiffness: 120, damping: 26, mass: 0.4 });
+
+  if (reduced) return <div className={className}>{children}</div>;
 
   return (
     <div ref={ref} className={className}>
@@ -164,7 +184,12 @@ export function WordReveal({
   delay?: number;
   play?: boolean;
 }) {
+  const reduced = useReducedMotion();
   const words = text.split(" ");
+
+  // El titular tiene que quedar legible igual: se muestra entero, sin el
+  // deslizamiento palabra por palabra.
+  if (reduced) return <span className={className}>{text}</span>;
 
   return (
     <span className={className}>
