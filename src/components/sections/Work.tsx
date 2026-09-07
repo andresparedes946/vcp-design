@@ -67,9 +67,18 @@ function ProjectCard({
       className={stacking ? "lg:sticky" : ""}
       style={stacking ? { top: TOP + index * STEP } : undefined}
     >
+      {/*
+        Apiladas, las tarjetas necesitan fondo opaco. `.glass` es casi
+        transparente y se apoya en `backdrop-filter`, que difumina lo de atrás
+        pero no lo tapa: un titular grande de la tarjeta de abajo se sigue
+        leyendo a través de la de arriba. Fuera del apilado se mantiene el
+        vidrio, con las partículas del fondo pasando por detrás.
+      */}
       <motion.div
-        className="origin-top"
-        style={stacking ? { scale } : undefined}
+        className="origin-top rounded-2xl"
+        style={{
+          ...(stacking ? { scale, backgroundColor: "var(--color-void)" } : {}),
+        }}
       >
         <SpotlightCard className="group glass relative overflow-hidden rounded-2xl p-4 sm:p-5 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center lg:gap-8">
           <ProjectVisual project={project} />
