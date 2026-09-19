@@ -58,8 +58,14 @@ function ProjectCard({
     Cada tarjeta se encoge a medida que las siguientes la tapan, así que las de
     abajo del mazo asoman apenas más chicas. La última no se encoge nunca: es
     la que queda a la vista.
+
+    El encogido total es fijo y se reparte entre las tarjetas que haya, en vez
+    de ser un porcentaje por tarjeta: con un paso fijo, sumar proyectos deja a
+    la primera cada vez más chica —con cinco quedaría al 80%— y el mazo se lee
+    deformado. Así la de más abajo siempre queda al 86%, sean tres o siete.
   */
-  const targetScale = 1 - (total - 1 - index) * 0.05;
+  const depth = total > 1 ? (total - 1 - index) / (total - 1) : 0;
+  const targetScale = 1 - depth * 0.14;
   const scale = useTransform(progress, [index / total, 1], [1, targetScale]);
 
   return (
@@ -80,8 +86,37 @@ function ProjectCard({
           ...(stacking ? { scale, backgroundColor: "var(--color-void)" } : {}),
         }}
       >
-        <SpotlightCard className="group glass relative overflow-hidden rounded-2xl p-4 sm:p-5 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center lg:gap-8">
-          <ProjectVisual project={project} />
+        <SpotlightCard
+          className={`group glass relative overflow-hidden rounded-2xl p-4 transition-[transform,box-shadow] duration-500 ease-out sm:p-5 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center lg:gap-8 ${
+            project.url
+              ? "hover:-translate-y-1.5 hover:shadow-[0_28px_70px_-30px_rgba(0,0,0,0.95)]"
+              : ""
+          }`}
+        >
+          <div className="relative">
+            <ProjectVisual project={project} />
+
+            {/*
+              La tarjeta entera es clickeable, pero eso no se ve. Esta chapa
+              aparece sobre la captura al pasar por encima y lo dice: sin ella
+              el único indicio de que hay algo que abrir es la flechita del
+              titular. Decorativa a propósito — el clic lo recibe el enlace real
+              de abajo, que se estira sobre toda la tarjeta.
+            */}
+            {project.url && (
+              <span
+                aria-hidden="true"
+                className="t-mono pointer-events-none absolute right-3 top-3 z-20 inline-flex -translate-y-1 items-center gap-1.5 rounded-full border px-3 py-1.5 text-[0.68rem] text-chrome opacity-0 backdrop-blur-md transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
+                style={{
+                  borderColor: `${project.accent}66`,
+                  backgroundColor: `${project.accent}24`,
+                }}
+              >
+                Abrir
+                <ArrowUpRight className="h-3 w-3" strokeWidth={2.4} />
+              </span>
+            )}
+          </div>
 
           <div className="flex flex-1 flex-col px-1.5 pb-1 pt-6 sm:px-2 lg:pt-0">
             <div className="flex items-center justify-between gap-4">
@@ -98,7 +133,14 @@ function ProjectCard({
                   target="_blank"
                   rel="noopener noreferrer"
                   data-cursor="ABRIR"
-                  className="group/link inline-flex items-baseline gap-2.5 transition-colors duration-300 hover:text-peri"
+                  /*
+                    El `::after` estira este enlace sobre toda la tarjeta: se
+                    abre el proyecto haciendo clic en cualquier parte, y sigue
+                    habiendo un solo enlace real para el teclado y el lector de
+                    pantalla, en vez de envolver la tarjeta en un <a> con otro
+                    <a> adentro.
+                  */
+                  className="group/link inline-flex items-baseline gap-2.5 transition-colors duration-300 after:absolute after:inset-0 after:z-10 after:content-[''] hover:text-peri"
                 >
                   {project.name}
                   <ArrowUpRight

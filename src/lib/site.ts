@@ -158,6 +158,30 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    id: "aberturas-lujan",
+    name: "Aberturas Luján",
+    category: "Tienda online · E-commerce",
+    year: "2026",
+    summary:
+      "Fábrica de aberturas de aluminio, con dominio propio y venta online. Catálogo por línea, carrito y pago con Mercado Pago, más pedido de cotización para lo que no entra en una medida estándar.",
+    stack: ["Next.js", "Supabase", "Mercado Pago"],
+    image: "/proyectos/aberturas-lujan.jpg",
+    accent: "#9fb3c8",
+    url: "https://aberturaslujan.com.ar",
+  },
+  {
+    id: "estudio-barrionuevo",
+    name: "Estudio Barrionuevo",
+    category: "Sitio de una página",
+    year: "2026",
+    summary:
+      "Piezas escultóricas para arquitectura e interiores. La referencia no fue una web de producto sino un catálogo de galería: la obra ocupa la pantalla completa y el texto se corre a un costado.",
+    stack: ["Next.js", "Framer Motion", "Lenis"],
+    image: "/proyectos/estudio-barrionuevo.jpg",
+    accent: "#cbb185",
+    url: "https://www.estudio-barrionuevo.com",
+  },
+  {
     id: "nexo",
     name: "JardinControl",
     category: "PWA · App web",
