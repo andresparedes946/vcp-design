@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowUp } from "lucide-react";
-import { nav, site, whatsapp, whatsappHref } from "@/lib/site";
+import { nav, site, socials, whatsapp, whatsappHref } from "@/lib/site";
 import { LogoMark } from "../Logo";
 import { Reveal } from "../Reveal";
 import { MagneticButton } from "../Magnetic";
@@ -70,6 +70,25 @@ export function Footer() {
                   {site.email}
                 </a>
               </li>
+              {/*
+                Los perfiles oficiales. Además de servir para que alguien nos
+                escriba, son el enlace real que respalda la lista `sameAs` de
+                los datos estructurados: así Google confirma que el sitio y el
+                perfil son la misma marca.
+              */}
+              {socials.map((profile) => (
+                <li key={profile.url}>
+                  <a
+                    href={profile.url}
+                    target="_blank"
+                    rel="noopener noreferrer me"
+                    aria-label={`${profile.label} de ${site.name}`}
+                    className="text-[0.94rem] text-mist transition-colors duration-300 hover:text-peri"
+                  >
+                    {profile.handle}
+                  </a>
+                </li>
+              ))}
               <li className="t-mono pt-1 text-[0.8rem] text-faint">
                 {whatsapp.tooltip}
               </li>

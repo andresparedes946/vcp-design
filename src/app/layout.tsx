@@ -9,6 +9,7 @@ import { Nav } from "@/components/Nav";
 import { PreloaderGate } from "@/components/Preloader";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { WhatsAppFab } from "@/components/WhatsAppFab";
+import { organizationSchema } from "@/lib/schema";
 import { site, siteUrl } from "@/lib/site";
 
 /**
@@ -42,6 +43,11 @@ export const metadata: Metadata = {
     template: `%s · ${site.name}`,
   },
   description,
+  // Le dice a Google cuál es la dirección oficial de la página. Sin esto, si el
+  // sitio queda accesible por más de una URL —con y sin www, el dominio de
+  // Vercel además del propio— Google las trata como páginas distintas y reparte
+  // el posicionamiento entre todas en lugar de acumularlo en una.
+  alternates: { canonical: "/" },
   keywords: [
     "desarrollo de software",
     "aplicaciones móviles",
@@ -68,6 +74,15 @@ export const metadata: Metadata = {
     description,
   },
   robots: { index: true, follow: true },
+  /*
+    Verificación de Google Search Console.
+    En un dominio .vercel.app no se puede verificar por DNS —la zona es de
+    Vercel, no nuestra—, así que va por etiqueta HTML: en Search Console se
+    elige "Prefijo de la URL", Google da un código, y ese código se carga como
+    variable de entorno en Vercel (entorno Production) con este nombre. Sin la
+    variable la etiqueta no se emite, que es lo correcto en desarrollo.
+  */
+  verification: { google: process.env.GOOGLE_SITE_VERIFICATION },
 };
 
 export const viewport: Viewport = {
@@ -79,8 +94,18 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="es" className={`${archivo.variable} ${jetbrains.variable}`}>
+    <html lang="es-AR" className={`${archivo.variable} ${jetbrains.variable}`}>
       <body className="antialiased">
+        {/*
+          Datos estructurados de la marca. Es texto para los buscadores, no se
+          ve en pantalla. Va en el body y no en el head porque Next.js sólo
+          permite metadata serializable en `metadata`, y este bloque es JSON.
+        */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+
         <a
           href="#contenido"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[300] focus:rounded-full focus:bg-violet focus:px-5 focus:py-3 focus:text-sm focus:font-semibold focus:text-white"

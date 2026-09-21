@@ -10,10 +10,42 @@ export const site = {
   tagline: "Apps · Web · SaaS",
   role: "Estudio de software",
   location: "Buenos Aires, Argentina",
+  /** Ciudad y país por separado: así los pide el schema de Google. */
+  city: "Buenos Aires",
+  country: "AR",
   email: "vcpdesign@outlook.com.ar",
   phoneDisplay: "+54 9 11 5562-5597",
+  /** El mismo teléfono en formato E.164, que es el que entiende Google. */
+  phoneE164: "+5491155625597",
   founded: 2026,
 } as const;
+
+/**
+ * Perfiles oficiales de la marca.
+ *
+ * No es decorativo: es la lista `sameAs` del JSON-LD, o sea cómo Google
+ * confirma que el sitio, el Instagram y el LinkedIn son la misma entidad. Con
+ * esa confirmación arma el panel de marca a la derecha del resultado cuando
+ * alguien busca "VCP Design" — que es lo que va a hacer todo prospecto antes
+ * de responderte.
+ *
+ * Van sin parámetros de consulta (el `?hl=es-la` que Instagram agrega al
+ * compartir es el idioma de quien copió el link, no parte de la dirección).
+ *
+ * Poné sólo perfiles que existan, estén activos y sean *de la marca*: un
+ * enlace roto resta, y un perfil personal no confirma la identidad de la
+ * empresa. Las entradas vacías se descartan solas.
+ */
+export const socials = [
+  {
+    label: "Instagram",
+    handle: "@vcp.design",
+    url: "https://www.instagram.com/vcp.design/",
+  },
+] as const;
+
+/** La lista plana que consume el JSON-LD. Sale de `socials`, no se duplica. */
+export const socialProfiles: string[] = socials.map((profile) => profile.url);
 
 /**
  * Dominio del sitio. De acá salen la URL canónica, el sitemap y las etiquetas
