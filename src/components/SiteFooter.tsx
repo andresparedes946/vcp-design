@@ -1,34 +1,40 @@
-"use client";
+import Link from "next/link";
+import { nav, site, socials, whatsappHref } from "@/lib/site";
+import { LogoMark } from "./Logo";
+import { Container } from "./Section";
+import { Reveal } from "./Reveal";
 
-import { ArrowUp } from "lucide-react";
-import { nav, site, socials, whatsapp, whatsappHref } from "@/lib/site";
-import { LogoMark } from "../Logo";
-import { Reveal } from "../Reveal";
-import { MagneticButton } from "../Magnetic";
-
-export function Footer() {
+/**
+ * Pie del sitio, compuesto como el colofón de un libro.
+ *
+ * Un colofón es la nota final donde una edición declara cómo fue hecha: con
+ * qué tipografías, en qué imprenta, en qué año. Acá cumple la misma función y
+ * además hace un trabajo comercial concreto — es un estudio de software
+ * diciendo en una línea con qué construye, sin montar otra sección para eso.
+ */
+export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative mt-8 border-t border-white/[0.07]">
-      <div className="mx-auto max-w-[84rem] px-5 py-16 sm:px-8 md:py-20">
-        <div className="grid gap-12 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-10">
+    <footer className="relative z-[2] border-t border-white/[0.07]">
+      <Container className="py-16 md:py-20">
+        <div className="grid gap-12 md:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-10">
           <div>
             <div className="flex items-center gap-3">
               <LogoMark className="h-9 w-9" strokeWidth={3} />
               <div className="flex flex-col leading-none">
-                <span className="t-chrome text-[1.15rem] font-bold tracking-[0.08em] [font-variation-settings:'wdth'_118]">
+                <span className="t-chrome-brand text-[1.15rem] font-bold tracking-[0.08em] [font-variation-settings:'wdth'_118]">
                   VCP
                 </span>
-                <span className="t-label mt-1 text-[0.52rem] text-violet/80">
-                  DESIGN
-                </span>
+                <span className="t-label mt-1 text-[0.52rem] text-violet/80">DESIGN</span>
               </div>
             </div>
 
-            <p className="t-body mt-6 max-w-xs text-[0.94rem] text-muted">
-              {site.role} en {site.location}. Construimos apps móviles,
-              plataformas web, sistemas a medida y automatizaciones.
+            <p className="t-label mt-6 text-faint">{site.concept}</p>
+
+            <p className="t-body mt-4 max-w-xs text-[0.94rem] text-muted">
+              {site.role} en {site.location}. Diseñamos y desarrollamos productos
+              digitales, y publicamos recursos para quien quiere entenderlos.
             </p>
           </div>
 
@@ -36,13 +42,13 @@ export function Footer() {
             <h2 className="t-label text-faint">Navegación</h2>
             <ul className="mt-5 flex flex-col gap-3">
               {nav.map((item) => (
-                <li key={item.id}>
-                  <a
-                    href={`#${item.id}`}
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
                     className="text-[0.94rem] text-mist transition-colors duration-300 hover:text-peri"
                   >
                     {item.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -89,19 +95,16 @@ export function Footer() {
                   </a>
                 </li>
               ))}
-              <li className="t-mono pt-1 text-[0.8rem] text-faint">
-                {whatsapp.tooltip}
-              </li>
             </ul>
           </div>
         </div>
 
         {/* Cierre: el lettering a escala de página */}
-        <Reveal direction="up" distance={30} delay={0.05}>
+        <Reveal direction="up" distance={26} delay={0.05}>
           <div className="mt-16 select-none overflow-hidden md:mt-20">
             <div
               aria-hidden="true"
-              className="t-display t-chrome whitespace-nowrap text-center text-[clamp(3.6rem,15vw,13rem)] leading-[0.85] opacity-[0.22]"
+              className="t-display t-chrome whitespace-nowrap text-center text-[clamp(3.4rem,15vw,13rem)] leading-[0.85] opacity-[0.14]"
             >
               VCP DESIGN
             </div>
@@ -110,38 +113,16 @@ export function Footer() {
 
         <div className="rule mt-10" />
 
-        <div className="mt-7 flex flex-wrap items-center justify-between gap-5">
-          <p className="t-mono text-[0.75rem] text-faint">
+        <div className="mt-7 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <p className="t-mono text-[0.72rem] text-faint">
             © {year} {site.name}. Todos los derechos reservados.
           </p>
-
-          <div className="flex items-center gap-6">
-            <p className="t-label hidden text-faint sm:block">{site.tagline}</p>
-
-            <MagneticButton
-              type="button"
-              onClick={() =>
-                window.scrollTo({
-                  top: 0,
-                  behavior: window.matchMedia("(prefers-reduced-motion: reduce)")
-                    .matches
-                    ? "auto"
-                    : "smooth",
-                })
-              }
-              aria-label="Volver arriba"
-              data-cursor="ARRIBA"
-              strength={0.25}
-              className="group flex h-11 w-11 items-center justify-center rounded-full border border-white/10 text-muted transition-colors duration-300 hover:border-peri/40 hover:text-peri"
-            >
-              <ArrowUp
-                className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5"
-                strokeWidth={2}
-              />
-            </MagneticButton>
-          </div>
+          <p className="t-mono text-[0.72rem] text-faint">
+            Compuesto en Archivo y Newsreader · Construido con Next.js ·{" "}
+            {site.city}, {site.founded}
+          </p>
         </div>
-      </div>
+      </Container>
     </footer>
   );
 }

@@ -1,14 +1,14 @@
 /**
  * Contenido del sitio.
  * Todo lo editable vive acá: datos de contacto, servicios, proyectos y textos.
- * Los proyectos marcados con `placeholder: true` son de ejemplo — reemplazalos
- * por casos reales y borrá la bandera.
  */
 
 export const site = {
   name: "VCP Design",
-  tagline: "Apps · Web · SaaS",
-  role: "Estudio de software",
+  /** El posicionamiento nuevo: estudio y, además, casa de productos. */
+  concept: "Digital Studio & Products",
+  tagline: "Web · Apps · E-commerce · SaaS",
+  role: "Estudio digital",
   location: "Buenos Aires, Argentina",
   /** Ciudad y país por separado: así los pide el schema de Google. */
   city: "Buenos Aires",
@@ -21,39 +21,11 @@ export const site = {
 } as const;
 
 /**
- * Perfiles oficiales de la marca.
- *
- * No es decorativo: es la lista `sameAs` del JSON-LD, o sea cómo Google
- * confirma que el sitio, el Instagram y el LinkedIn son la misma entidad. Con
- * esa confirmación arma el panel de marca a la derecha del resultado cuando
- * alguien busca "VCP Design" — que es lo que va a hacer todo prospecto antes
- * de responderte.
- *
- * Van sin parámetros de consulta (el `?hl=es-la` que Instagram agrega al
- * compartir es el idioma de quien copió el link, no parte de la dirección).
- *
- * Poné sólo perfiles que existan, estén activos y sean *de la marca*: un
- * enlace roto resta, y un perfil personal no confirma la identidad de la
- * empresa. Las entradas vacías se descartan solas.
- */
-export const socials = [
-  {
-    label: "Instagram",
-    handle: "@vcp.design",
-    url: "https://www.instagram.com/vcp.design/",
-  },
-] as const;
-
-/** La lista plana que consume el JSON-LD. Sale de `socials`, no se duplica. */
-export const socialProfiles: string[] = socials.map((profile) => profile.url);
-
-/**
  * Dominio del sitio. De acá salen la URL canónica, el sitemap y las etiquetas
  * Open Graph — o sea, la tarjeta que se ve cuando alguien comparte el link.
  *
  * Se resuelve en cascada para que nunca apunte a un dominio que no existe:
- *   1. `NEXT_PUBLIC_SITE_URL` — el dominio propio, cuando lo tengas. Se carga
- *      como variable de entorno en Vercel y manda sobre todo lo demás.
+ *   1. `NEXT_PUBLIC_SITE_URL` — el dominio propio, cuando lo tengas.
  *   2. La URL de producción que Vercel asigna sola (vcp-design.vercel.app).
  *   3. localhost, en desarrollo.
  */
@@ -75,11 +47,55 @@ export const whatsappHref = `https://wa.me/${whatsapp.number}?text=${encodeURICo
   whatsapp.message,
 )}`;
 
+/**
+ * Perfiles oficiales de la marca.
+ *
+ * No es decorativo: es la lista `sameAs` del JSON-LD, o sea cómo Google
+ * confirma que el sitio y el perfil son la misma entidad, y con eso arma el
+ * panel de marca cuando alguien busca "VCP Design".
+ *
+ * Van sin parámetros de consulta y sólo perfiles que existan, estén activos y
+ * sean de la marca. Las entradas vacías se descartan solas.
+ */
+export const socials = [
+  {
+    label: "Instagram",
+    handle: "@vcp.design",
+    url: "https://www.instagram.com/vcp.design/",
+  },
+] as const;
+
+/** La lista plana que consume el JSON-LD. Sale de `socials`, no se duplica. */
+export const socialProfiles: string[] = socials.map((profile) => profile.url);
+
+/* ── Navegación ────────────────────────────────────────────────────────── */
+
+/**
+ * Navegación principal. Son rutas, no anclas: cada área del estudio tiene su
+ * página propia y la home funciona como portada que las presenta.
+ */
 export const nav = [
+  { href: "/servicios", label: "Servicios" },
+  { href: "/proyectos", label: "Proyectos" },
+  { href: "/ebooks", label: "Ebooks" },
+  { href: "/estudio", label: "Sobre VCP" },
+  { href: "/contacto", label: "Contacto" },
+] as const;
+
+/**
+ * Secciones de la home, en orden de lectura.
+ *
+ * Alimentan dos cosas: el encabezado de página de cada sección y el riel de
+ * progreso. El `label` es el que se imprime en la hairline a sangre, así que
+ * es texto visible, no un identificador interno.
+ */
+export const homeSections = [
+  { id: "enfoque", label: "Enfoque" },
   { id: "servicios", label: "Servicios" },
-  { id: "proyectos", label: "Proyectos" },
-  { id: "stack", label: "Stack" },
   { id: "proceso", label: "Proceso" },
+  { id: "proyectos", label: "Proyectos" },
+  { id: "ebooks", label: "Recursos" },
+  { id: "ecosistema", label: "Ecosistema" },
   { id: "estudio", label: "Estudio" },
   { id: "contacto", label: "Contacto" },
 ] as const;
@@ -91,65 +107,66 @@ export type Service = {
   index: string;
   title: string;
   summary: string;
-  deliverables: string[];
-  span: string;
+  tags: string[];
+  /**
+   * Plazo típico. Opcional a propósito: sólo lo llevan los servicios de los
+   * que ya hay obra entregada para respaldar el número. Mejor no mostrar nada
+   * que inventar un plazo que después no se cumple.
+   */
+  span?: string;
 };
 
 export const services: Service[] = [
   {
-    id: "apps",
-    index: "APPS",
-    title: "Aplicaciones móviles",
+    id: "landing-pages",
+    index: "01",
+    title: "Landing pages",
     summary:
-      "Apps nativas para iOS y Android desde una sola base de código. Offline, notificaciones push, pagos y publicación en ambas tiendas.",
-    deliverables: [
-      "React Native / Expo",
-      "Modo offline y sincronización",
-      "Push, deep links y biometría",
-      "Publicación en App Store y Google Play",
-    ],
-    span: "4–6 semanas",
+      "Una sola página con un solo objetivo: presentar un producto, un servicio o una campaña, y que el visitante haga algo antes de irse.",
+    tags: ["Diseño", "UX/UI", "Desarrollo", "Responsive"],
   },
   {
-    id: "web",
-    index: "WEB",
-    title: "Plataformas web",
+    id: "websites",
+    index: "02",
+    title: "Websites",
     summary:
-      "Sitios y aplicaciones que cargan rápido, posicionan y se ven impecables en cualquier pantalla. Medibles desde el primer día.",
-    deliverables: [
-      "Next.js y renderizado en servidor",
-      "SEO técnico y Core Web Vitals",
-      "Panel de administración a medida",
-      "Analítica y seguimiento de conversión",
-    ],
+      "Sitios web profesionales para empresas, profesionales y marcas. Cargan rápido, posicionan y se ven impecables en cualquier pantalla.",
+    tags: ["Diseño", "Desarrollo", "SEO", "Performance"],
     span: "3–4 semanas",
   },
   {
-    id: "saas",
-    index: "SAAS",
-    title: "Productos SaaS",
+    id: "ecommerce",
+    index: "03",
+    title: "E-commerce",
     summary:
-      "Software por suscripción de punta a punta: cuentas, roles, facturación recurrente y la infraestructura para que aguante crecer.",
-    deliverables: [
-      "Multi-tenant y control de accesos",
-      "Suscripciones con Stripe o Mercado Pago",
-      "API documentada e integraciones",
-      "Monitoreo, backups y despliegue continuo",
-    ],
+      "Tiendas online preparadas para mostrar productos y vender: catálogo, carrito, medios de pago y un panel para manejarlo sin depender de nadie.",
+    tags: ["Catálogo", "Checkout", "Pagos", "Gestión"],
+  },
+  {
+    id: "apps",
+    index: "04",
+    title: "Apps",
+    summary:
+      "Aplicaciones web y móviles construidas alrededor de cómo trabaja el negocio, no al revés. Una base de código, las dos tiendas.",
+    tags: ["iOS", "Android", "PWA", "Offline"],
     span: "4–6 semanas",
   },
   {
-    id: "sistemas",
-    index: "SISTEMAS",
-    title: "Sistemas y automatizaciones",
+    id: "saas",
+    index: "05",
+    title: "SaaS",
     summary:
-      "Software interno para que tu equipo deje de hacer a mano lo que puede hacerse solo: gestión, portales para clientes y tareas que se ejecutan sin que nadie las toque.",
-    deliverables: [
-      "ERP y sistemas de gestión a medida",
-      "Portales para clientes y proveedores",
-      "Automatización de tareas repetitivas",
-      "Integraciones entre sistemas y reportes",
-    ],
+      "Plataformas digitales, sistemas de gestión y productos por suscripción: cuentas, permisos, cobros recurrentes y la infraestructura para crecer.",
+    tags: ["Cuentas", "Roles", "Suscripciones", "API"],
+    span: "4–6 semanas",
+  },
+  {
+    id: "automatizaciones",
+    index: "06",
+    title: "Automatizaciones",
+    summary:
+      "Automatizamos lo repetitivo para que tu equipo deje de hacer a mano lo que puede hacerse solo, y para que los datos lleguen sin que nadie los copie.",
+    tags: ["Integraciones", "Reportes", "Tareas programadas", "Avisos"],
     span: "2–4 semanas",
   },
 ];
@@ -179,20 +196,17 @@ export type Project = {
    * un enlace roto, no como un sistema en producción.
    */
   requiresAuth?: boolean;
-  /**
-   * Texto del aviso de acceso. Por defecto se asume un sistema interno de un
-   * cliente; los productos donde cualquiera puede abrirse una cuenta necesitan
-   * decir otra cosa, o el aviso pasa a ser mentira.
-   */
+  /** Texto del aviso de acceso, cuando el genérico no aplica. */
   authNote?: string;
-  placeholder?: boolean;
+  /** Entra en la selección de la home. El resto vive en /proyectos. */
+  featured?: boolean;
 };
 
 export const projects: Project[] = [
   {
     id: "aberturas-lujan",
     name: "Aberturas Luján",
-    category: "Tienda online · E-commerce",
+    category: "E-commerce",
     year: "2026",
     summary:
       "Fábrica de aberturas de aluminio, con dominio propio y venta online. Catálogo por línea, carrito y pago con Mercado Pago, más pedido de cotización para lo que no entra en una medida estándar.",
@@ -200,11 +214,12 @@ export const projects: Project[] = [
     image: "/proyectos/aberturas-lujan.jpg",
     accent: "#9fb3c8",
     url: "https://aberturaslujan.com.ar",
+    featured: true,
   },
   {
     id: "estudio-barrionuevo",
     name: "Estudio Barrionuevo",
-    category: "Sitio de una página",
+    category: "Website",
     year: "2026",
     summary:
       "Piezas escultóricas para arquitectura e interiores. La referencia no fue una web de producto sino un catálogo de galería: la obra ocupa la pantalla completa y el texto se corre a un costado.",
@@ -212,27 +227,12 @@ export const projects: Project[] = [
     image: "/proyectos/estudio-barrionuevo.jpg",
     accent: "#cbb185",
     url: "https://www.estudio-barrionuevo.com",
-  },
-  {
-    id: "nexo",
-    name: "JardinControl",
-    category: "PWA · App web",
-    year: "2026",
-    summary:
-      "Fichaje con código QR y DNI para las 20 empleadas de un jardín de infantes. La dirección ve en el momento quién llegó, quién falta y cómo viene el mes en horas y sueldos.",
-    metric: { value: "-50%", label: "tiempo de administración" },
-    stack: ["Next.js", "Supabase", "PWA"],
-    // Captura con datos de prueba, encuadrada a 16:10 sobre el fondo del
-    // propio dashboard. Para reemplazarla, pisá el archivo con la nueva.
-    image: "/proyectos/jardincontrol.png",
-    accent: "#7c6cf0",
-    url: "https://jardin-control.vercel.app",
-    requiresAuth: true,
+    featured: true,
   },
   {
     id: "kinetic",
     name: "KineTic",
-    category: "SaaS · App web",
+    category: "SaaS",
     year: "2026",
     summary:
       "Consultorio digital para kinesiólogos. Pacientes, historia clínica, tratamientos, agenda y sesiones en un solo lugar: la sesión se carga desde la camilla y el informe en PDF para el médico sale solo.",
@@ -242,11 +242,27 @@ export const projects: Project[] = [
     url: "https://kinetic-salud.vercel.app/dashboard",
     requiresAuth: true,
     authNote: "Requiere cuenta · prueba gratuita",
+    featured: true,
+  },
+  {
+    id: "jardincontrol",
+    name: "JardinControl",
+    category: "PWA · Sistema de gestión",
+    year: "2026",
+    summary:
+      "Fichaje con código QR y DNI para las 20 empleadas de un jardín de infantes. La dirección ve en el momento quién llegó, quién falta y cómo viene el mes en horas y sueldos.",
+    metric: { value: "-50%", label: "tiempo de administración" },
+    stack: ["Next.js", "Supabase", "PWA"],
+    image: "/proyectos/jardincontrol.png",
+    accent: "#7c6cf0",
+    url: "https://jardin-control.vercel.app",
+    requiresAuth: true,
+    featured: true,
   },
   {
     id: "profit",
     name: "ProFit",
-    category: "PWA · App web",
+    category: "PWA · Salud",
     year: "2026",
     summary:
       "Seguimiento de comidas, macros, peso y ayuno intermitente. Escribís o decís lo que comiste —«dos huevos, dos tostadas y una banana»— y la app reconoce los alimentos y calcula las calorías, sin buscar uno por uno en una planilla.",
@@ -259,40 +275,41 @@ export const projects: Project[] = [
   },
 ];
 
-/* ── Stack ─────────────────────────────────────────────────────────────── */
+/** La selección que se muestra en la home. El resto vive en /proyectos. */
+export const featuredProjects = projects.filter((project) => project.featured);
 
-export const stackGroups = [
-  {
-    label: "Producto",
-    items: ["Next.js", "React", "TypeScript", "React Native", "Expo", "Tailwind CSS"],
-  },
-  {
-    label: "Servidor",
-    items: ["Node.js", "PostgreSQL", "Supabase", "Prisma", "Redis", "tRPC"],
-  },
-  {
-    label: "Infraestructura",
-    items: ["Vercel", "AWS", "Docker", "GitHub Actions", "Cloudflare", "Sentry"],
-  },
+/* ── Enfoque (prueba social) ───────────────────────────────────────────── */
+
+/**
+ * Sólo datos verificables. Nada de clientes, facturación, porcentajes ni
+ * cantidad de usuarios: un número inventado se nota y cuesta más de lo que
+ * suma.
+ */
+export const stats = [
+  { value: String(projects.length).padStart(2, "0") + "+", label: "Proyectos entregados" },
+  { value: "04", label: "Rubros distintos" },
+  { value: "2026", label: "Año de fundación" },
+  { value: "07d", label: "Al primer entregable" },
 ];
 
-export const stackMarquee = [
+/** Las capacidades, como palabras sueltas. Se imprimen grandes. */
+export const disciplines = ["Web", "Apps", "SaaS", "E-commerce"];
+
+/* ── Stack ─────────────────────────────────────────────────────────────── */
+
+/**
+ * Corto a propósito. La tecnología tiene que demostrar capacidad, no ocupar el
+ * centro de la página: una lista de treinta logos dice menos que siete bien
+ * elegidos.
+ */
+export const stack = [
   "Next.js",
   "React",
   "TypeScript",
-  "React Native",
-  "Node.js",
-  "PostgreSQL",
   "Supabase",
-  "Prisma",
+  "PostgreSQL",
+  "Node.js",
   "Tailwind CSS",
-  "Expo",
-  "Vercel",
-  "AWS",
-  "Docker",
-  "Stripe",
-  "Figma",
-  "GitHub Actions",
 ];
 
 /* ── Proceso ───────────────────────────────────────────────────────────── */
@@ -304,41 +321,41 @@ export type Step = {
   span: string;
 };
 
+/** Acá sí se numera: el orden es información, no decoración. */
 export const steps: Step[] = [
   {
     n: "01",
     title: "Descubrimiento",
-    body: "Entendemos el negocio antes que el software. Definimos a quién le sirve, qué problema resuelve y cómo se va a medir que funcionó.",
+    body: "Entendemos el negocio antes que el software: a quién le sirve, qué problema resuelve y cómo se va a medir que funcionó.",
     span: "3–4 días",
   },
   {
     n: "02",
+    title: "Estrategia",
+    body: "Definimos estructura, funcionalidades y experiencia. Sale un alcance escrito, con lo que entra y lo que queda para después.",
+    span: "3–5 días",
+  },
+  {
+    n: "03",
     title: "Diseño",
     body: "Arquitectura, flujos y prototipo navegable. Vas a poder recorrer el producto y pedir cambios antes de que se escriba una línea de código.",
     span: "1 semana",
   },
   {
-    n: "03",
+    n: "04",
     title: "Desarrollo",
     body: "Entregas cada dos semanas en un entorno real. Ves avances concretos, probás, y ajustamos el rumbo sin esperar al final.",
     span: "3–6 semanas",
   },
   {
-    n: "04",
-    title: "Lanzamiento y soporte",
+    n: "05",
+    title: "Lanzamiento",
     body: "Publicación, monitoreo y correcciones. Después seguimos con mejoras mensuales o te entregamos todo documentado para tu equipo.",
     span: "Continuo",
   },
 ];
 
 /* ── Estudio ───────────────────────────────────────────────────────────── */
-
-export const stats = [
-  { value: "5+", label: "Productos entregados" },
-  { value: "1", label: "Año construyendo" },
-  { value: "4 de 5", label: "Clientes que nos eligen" },
-  { value: "7d", label: "Al primer entregable" },
-];
 
 export const principles = [
   {
@@ -361,23 +378,27 @@ export type Testimonial = {
   quote: string;
   author: string;
   role: string;
-  placeholder?: boolean;
 };
 
 export const testimonials: Testimonial[] = [
   {
     quote:
       "Llegamos con una idea escrita en papel y a la semana teníamos la app en el jardín. Lo que más valoro es que nos dijeron que no a tres funciones que no hacían falta y con la rapidez que trabajaron.",
-    author: "Sandra.C",
+    author: "Sandra C.",
     role: "Directora, Jardín MF",
   },
 ];
 
 /* ── Contacto ──────────────────────────────────────────────────────────── */
 
-export const budgets = [
-  "Menos de $ 300.000",
-  "Todavía no lo sé",
-];
+export const budgets = ["Menos de $ 300.000", "Todavía no lo sé"];
 
-export const projectTypes = ["App móvil", "Plataforma web", "Producto SaaS", "PWA", "Sistema ERP", "Portales para clientes", "Otros"];
+export const projectTypes = [
+  "Landing page",
+  "Website",
+  "E-commerce",
+  "App",
+  "SaaS",
+  "Automatizaciones",
+  "Otro",
+];

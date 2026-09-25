@@ -57,7 +57,13 @@ export function ProjectVisual({ project }: { project: Project }) {
             src={project.image}
             alt={`Captura de ${project.name}`}
             fill
-            sizes="(max-width: 1024px) 100vw, 50vw"
+            /*
+              Las láminas ocupan el ancho completo de la caja, no media
+              columna: con `50vw` el navegador pedía una imagen de la mitad del
+              tamaño necesario y la escalaba hacia arriba, que es exactamente
+              la captura borrosa que arruina una sección de portfolio.
+            */
+            sizes="(max-width: 1440px) 100vw, 1344px"
             onLoad={() => setLoaded(true)}
             onError={() => setFailed(true)}
             className={`object-cover transition-all duration-700 ${

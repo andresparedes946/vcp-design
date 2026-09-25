@@ -1,27 +1,40 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, JetBrains_Mono } from "next/font/google";
+import { Archivo, JetBrains_Mono, Newsreader } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 import { AmbientBackground } from "@/components/AmbientBackground";
 import { CustomCursor } from "@/components/CustomCursor";
 import { Nav } from "@/components/Nav";
-import { PreloaderGate } from "@/components/Preloader";
 import { ScrollProgress } from "@/components/ScrollProgress";
+import { SiteFooter } from "@/components/SiteFooter";
 import { WhatsAppFab } from "@/components/WhatsAppFab";
 import { organizationSchema } from "@/lib/schema";
 import { site, siteUrl } from "@/lib/site";
 
 /**
- * Una sola superfamilia. El contraste tipográfico lo da el eje de ancho de
- * Archivo (titulares expandidos, cuerpo normal), igual que el lettering del
- * isologo. JetBrains Mono queda como voz utilitaria: etiquetas, índices, datos.
+ * Tres voces, cada una con un trabajo.
+ *
+ * Archivo es la voz del estudio: su eje de ancho da el contraste entre los
+ * titulares expandidos y el cuerpo a ancho normal, igual que el lettering del
+ * isologo. Newsreader en cursiva es la voz publicada, y aparece sólo en la
+ * palabra acentuada de cada titular y en las bajadas de los ebooks — es lo que
+ * hermana el estudio con la línea editorial. JetBrains Mono es la voz
+ * utilitaria: folios, pies de figura y datos.
  */
 const archivo = Archivo({
   subsets: ["latin"],
   axes: ["wdth"],
   display: "swap",
   variable: "--font-archivo",
+});
+
+const newsreader = Newsreader({
+  subsets: ["latin"],
+  style: ["italic"],
+  weight: ["300", "400"],
+  display: "swap",
+  variable: "--font-newsreader",
 });
 
 const jetbrains = JetBrains_Mono({
@@ -34,12 +47,14 @@ const jetbrains = JetBrains_Mono({
 // Es lo que se lee en el resultado de Google y en la vista previa del enlace.
 // Google corta alrededor de los 160 caracteres: lo importante va primero.
 const description =
-  "Estudio de software en Buenos Aires. Apps móviles, plataformas web, sistemas a medida y automatizaciones. Primeras entregas en días y precio cerrado.";
+  "VCP Design diseña y desarrolla webs, apps, e-commerce, SaaS y soluciones digitales para empresas y emprendedores. También creamos ebooks y recursos digitales.";
+
+const title = `${site.name} | Web, Apps, E-commerce y Productos Digitales`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${site.name} — Apps, Web y SaaS a medida`,
+    default: title,
     template: `%s · ${site.name}`,
   },
   description,
@@ -49,12 +64,14 @@ export const metadata: Metadata = {
   // el posicionamiento entre todas en lugar de acumularlo en una.
   alternates: { canonical: "/" },
   keywords: [
-    "desarrollo de software",
-    "aplicaciones móviles",
+    "estudio digital",
+    "diseño web",
     "desarrollo web",
+    "e-commerce",
+    "aplicaciones móviles",
     "SaaS",
-    "Next.js",
-    "React Native",
+    "automatizaciones",
+    "ebooks",
     "Buenos Aires",
     "Argentina",
   ],
@@ -65,12 +82,12 @@ export const metadata: Metadata = {
     locale: "es_AR",
     url: siteUrl,
     siteName: site.name,
-    title: `${site.name} — Apps, Web y SaaS a medida`,
+    title,
     description,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${site.name} — Apps, Web y SaaS a medida`,
+    title,
     description,
   },
   robots: { index: true, follow: true },
@@ -86,7 +103,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#05060f",
+  themeColor: "#08080b",
   colorScheme: "dark",
 };
 
@@ -94,8 +111,12 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="es-AR" className={`${archivo.variable} ${jetbrains.variable}`}>
-      <body className="antialiased">
+    <html
+      lang="es-AR"
+      className={`${archivo.variable} ${newsreader.variable} ${jetbrains.variable}`}
+    >
+      {/* `grain` imprime una textura de papel sobre toda la página. */}
+      <body className="grain antialiased">
         {/*
           Datos estructurados de la marca. Es texto para los buscadores, no se
           ve en pantalla. Va en el body y no en el head porque Next.js sólo
@@ -113,14 +134,17 @@ export default function RootLayout({
           Saltar al contenido
         </a>
 
-        <PreloaderGate>
-          <AmbientBackground />
-          <CustomCursor />
-          <ScrollProgress />
-          <Nav />
-          <main id="contenido">{children}</main>
-          <WhatsAppFab />
-        </PreloaderGate>
+        <AmbientBackground />
+        <CustomCursor />
+        <ScrollProgress />
+        <Nav />
+
+        <main id="contenido" className="relative z-[2]">
+          {children}
+        </main>
+
+        <SiteFooter />
+        <WhatsAppFab />
 
         {/*
           Métrica de visitas. Sin cookies y sin datos personales, así que no

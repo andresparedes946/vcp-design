@@ -2,32 +2,53 @@
 
 /* ==========================================================================
    VCP DESIGN — sistema visual
-   Paleta y tipografía derivadas del isologo: el vacío azul-negro del fondo,
-   el anillo violeta del glifo y el degradado cromado del lettering "VCP".
+   ==========================================================================
+
+   El sitio se compone como una monografía de estudio: un libro sobre el
+   trabajo. De ahí salen las tres decisiones que lo gobiernan todo.
+
+   1. Papel y tinta. Fondo negro real y neutro —no azulado—, y los titulares en
+      un blanco papel, nunca #fff puro. El violeta de la marca queda como tinta
+      de acento: aparece en el punto de la etiqueta, en el folio activo y en el
+      precio, y en ningún lado más. Un acento que se usa en todas partes deja
+      de ser un acento.
+
+   2. Dos voces tipográficas. Archivo, con su eje de ancho, es la voz del
+      estudio: titulares expandidos, interfaz, cuerpo. Newsreader en cursiva es
+      la voz publicada: aparece sólo en la palabra que carga el significado de
+      cada titular, y en las bajadas de los ebooks. Esa cursiva es lo que
+      hermana las dos unidades de negocio.
+
+   3. Encabezado de página. Cada sección se abre con una hairline a sangre que
+      lleva su nombre incrustado, como el running head de un libro impreso. Es
+      el elemento que hay que recordar del sitio, y reemplaza a la numeración
+      decorativa: las secciones no son una secuencia, el proceso sí — ahí, y
+      sólo ahí, se numera.
    ========================================================================== */
 
 @theme {
-  /* — Superficies — */
-  --color-void: #05060f;
-  --color-ink: #090b15;
-  --color-surface: #0e1120;
-  --color-elevated: #141830;
+  /* — Superficies. Negro neutro con un susurro de azul, no navy. — */
+  --color-void: #08080b;
+  --color-ink: #0b0c10;
+  --color-surface: #101116;
+  --color-elevated: #16171e;
 
-  /* — Marca — */
+  /* — Marca. El acento, con presupuesto de uso muy corto. — */
   --color-violet: #7c6cf0;
   --color-peri: #a99bff;
   --color-abyss: #3b2fa6;
-  --color-chrome: #eef0fb;
 
-  /* — Texto — */
-  --color-mist: #b9bed4;
-  --color-muted: #7a8098;
-  --color-faint: #4c5268;
+  /* — Texto. Escala de grises de papel, sin tinte. — */
+  --color-chrome: #f6f6f7;
+  --color-mist: #b4b5be;
+  --color-muted: #85868f;
+  --color-faint: #55565f;
 
   /* — Señal (uso mínimo, sólo estados) — */
   --color-signal: #34d399;
 
   --font-display: var(--font-archivo), "Segoe UI", system-ui, sans-serif;
+  --font-editorial: var(--font-newsreader), Georgia, "Times New Roman", serif;
   --font-mono: var(--font-jetbrains), ui-monospace, "SF Mono", monospace;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -58,14 +79,14 @@
     /*
       `clip` y no `hidden`: los dos recortan el desborde horizontal, pero
       `hidden` convierte al body en contenedor de scroll y eso deja sin efecto
-      cualquier `position: sticky` de adentro — el apilado de proyectos, sin ir
-      más lejos. `clip` recorta sin crear scrollport.
+      cualquier `position: sticky` de adentro. `clip` recorta sin crear
+      scrollport.
     */
     overflow-x: clip;
   }
 
   ::selection {
-    background: color-mix(in oklab, var(--color-violet) 45%, transparent);
+    background: color-mix(in oklab, var(--color-violet) 40%, transparent);
     color: var(--color-chrome);
   }
 
@@ -75,7 +96,6 @@
     border-radius: 4px;
   }
 
-  /* Scrollbar: hairline, sin peso visual. */
   ::-webkit-scrollbar {
     width: 10px;
   }
@@ -83,27 +103,25 @@
     background: var(--color-void);
   }
   ::-webkit-scrollbar-thumb {
-    background: color-mix(in oklab, var(--color-violet) 30%, transparent);
+    background: color-mix(in oklab, white 12%, transparent);
     border-radius: 99px;
     border: 3px solid var(--color-void);
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: color-mix(in oklab, var(--color-violet) 55%, transparent);
+    background: color-mix(in oklab, var(--color-violet) 50%, transparent);
   }
 }
 
 /* ==========================================================================
-   Tipografía — el contraste lo da el EJE DE ANCHO de Archivo, no una segunda
-   familia. Los titulares van expandidos (como el lettering "VCP"), el cuerpo
-   a ancho normal, y el mono es la voz utilitaria (etiquetas, índices, datos).
+   Tipografía
    ========================================================================== */
 
 .t-display {
   font-family: var(--font-display);
   font-variation-settings: "wdth" 112;
   font-weight: 700;
-  line-height: 0.94;
-  letter-spacing: -0.03em;
+  line-height: 0.92;
+  letter-spacing: -0.035em;
   text-wrap: balance;
 }
 
@@ -111,15 +129,15 @@
   font-family: var(--font-display);
   font-variation-settings: "wdth" 108;
   font-weight: 600;
-  line-height: 1.05;
-  letter-spacing: -0.022em;
+  line-height: 1.02;
+  letter-spacing: -0.028em;
   text-wrap: balance;
 }
 
 .t-body {
   font-variation-settings: "wdth" 100;
   font-weight: 400;
-  line-height: 1.7;
+  line-height: 1.68;
   letter-spacing: -0.005em;
   text-wrap: pretty;
 }
@@ -139,8 +157,33 @@
   letter-spacing: -0.01em;
 }
 
-/* Cromado del lettering: blanco → plata → violeta, igual que el isologo. */
+/*
+  La voz publicada. Cursiva, peso liviano y óptica más grande que la Archivo
+  que la rodea: Newsreader tiene una altura de x menor y, al mismo tamaño, se
+  leería hundida dentro del titular.
+*/
+.t-editorial {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  font-weight: 300;
+  letter-spacing: -0.015em;
+  font-size: 1.06em;
+}
+
+/*
+  Titulares: degradado de blanco a plata, sin violeta. El color de marca se
+  reserva para los acentos puntuales. Sigue habiendo profundidad, pero deja de
+  teñir cada encabezado de la página.
+*/
 .t-chrome {
+  background: linear-gradient(174deg, #ffffff 0%, #f0f0f2 38%, #b9bac3 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* El lettering del isologo sí conserva el cromado violeta de la identidad. */
+.t-chrome-brand {
   background: linear-gradient(
     168deg,
     #ffffff 0%,
@@ -155,21 +198,60 @@
 }
 
 /* ==========================================================================
+   Encabezado de página — la firma del sitio
+   ========================================================================== */
+
+/*
+  El encabezado de página se compone en `Section.tsx`: etiqueta, hairline y
+  folio son tres elementos con orden propio, y un pseudo-elemento sólo puede
+  ir al final. Acá queda únicamente el pie de figura, que sí es puro estilo.
+*/
+
+/* Pie de figura sobre las capturas — el lenguaje de lámina de monografía. */
+.fig {
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-faint);
+}
+
+/* ==========================================================================
+   Grano — textura de impresión sobre toda la página. Muy leve: sube la
+   sensación de material y evita que las superficies planas se lean como un
+   degradado digital.
+   ========================================================================== */
+
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: -50%;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ==========================================================================
    Primitivas de superficie
    ========================================================================== */
 
 .glass {
   background: linear-gradient(
     154deg,
-    color-mix(in oklab, white 6%, transparent),
+    color-mix(in oklab, white 5%, transparent),
     color-mix(in oklab, white 1.5%, transparent)
   );
-  backdrop-filter: blur(20px) saturate(140%);
-  -webkit-backdrop-filter: blur(20px) saturate(140%);
-  border: 1px solid color-mix(in oklab, white 9%, transparent);
+  backdrop-filter: blur(20px) saturate(130%);
+  -webkit-backdrop-filter: blur(20px) saturate(130%);
+  border: 1px solid color-mix(in oklab, white 8%, transparent);
 }
 
-/* Borde iluminado: una hairline que se enciende sólo en el borde superior. */
+/*
+  Borde que se enciende en hover. Blanco, no violeta: el acento se gasta en
+  otra parte y una grilla entera iluminándose de color sería exactamente el
+  exceso que el rediseño evita.
+*/
 .edge-lit {
   position: relative;
 }
@@ -181,10 +263,10 @@
   padding: 1px;
   background: linear-gradient(
     140deg,
-    color-mix(in oklab, var(--color-peri) 55%, transparent),
-    transparent 38%,
-    transparent 62%,
-    color-mix(in oklab, var(--color-violet) 28%, transparent)
+    color-mix(in oklab, white 34%, transparent),
+    transparent 40%,
+    transparent 60%,
+    color-mix(in oklab, var(--color-violet) 22%, transparent)
   );
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
@@ -211,9 +293,9 @@
   inset: 0;
   border-radius: inherit;
   background: radial-gradient(
-    420px circle at var(--mx, 50%) var(--my, 50%),
-    color-mix(in oklab, var(--color-violet) 16%, transparent),
-    transparent 60%
+    460px circle at var(--mx, 50%) var(--my, 50%),
+    color-mix(in oklab, white 7%, transparent),
+    transparent 62%
   );
   opacity: 0;
   transition: opacity 0.45s var(--ease-out-expo);
@@ -223,17 +305,81 @@
   opacity: 1;
 }
 
-/* Separador: hairline que se desvanece hacia los extremos. */
+/* Separador simple, sin acento de color. */
 .rule {
   height: 1px;
   background: linear-gradient(
     90deg,
     transparent,
-    color-mix(in oklab, white 12%, transparent) 22%,
-    color-mix(in oklab, var(--color-violet) 34%, transparent) 50%,
-    color-mix(in oklab, white 12%, transparent) 78%,
+    color-mix(in oklab, white 11%, transparent) 20%,
+    color-mix(in oklab, white 11%, transparent) 80%,
     transparent
   );
+}
+
+/* ==========================================================================
+   Libro — portada de ebook con canto y lomo, en CSS.
+   Un PDF mostrado como rectángulo plano se lee como un archivo; con canto y
+   lomo se lee como un producto editorial, que es justo la diferencia que el
+   rediseño necesita sostener.
+   ========================================================================== */
+
+.book-cover {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px 7px 7px 2px;
+  box-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.45),
+    0 22px 45px -18px rgba(0, 0, 0, 0.85),
+    0 50px 80px -40px rgba(0, 0, 0, 0.9);
+}
+/* Lomo: la sombra interna del pliegue, sobre el borde izquierdo. */
+.book-cover::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 13%;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.55) 0%,
+    rgba(0, 0, 0, 0.16) 42%,
+    rgba(255, 255, 255, 0.07) 74%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+/* Barniz: el reflejo diagonal del papel satinado. */
+.book-cover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    118deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 36%,
+    transparent 72%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+/* Canto: el bloque de páginas asomando por la derecha. */
+.book-edge {
+  position: absolute;
+  top: 1.6%;
+  bottom: 1.6%;
+  right: -6px;
+  width: 7px;
+  border-radius: 0 3px 3px 0;
+  background: repeating-linear-gradient(
+    90deg,
+    #d8d8dc 0px,
+    #f2f2f4 1px,
+    #b6b6bd 2px,
+    #e6e6ea 3px
+  );
+  box-shadow: inset -1px 0 2px rgba(0, 0, 0, 0.35);
 }
 
 /* ==========================================================================
@@ -244,7 +390,7 @@
   position: absolute;
   border-radius: 9999px;
   transform: scale(0);
-  background: color-mix(in oklab, white 42%, transparent);
+  background: color-mix(in oklab, white 38%, transparent);
   animation: ripple-out 0.62s var(--ease-out-expo) forwards;
   pointer-events: none;
 }
@@ -264,7 +410,7 @@
   background: linear-gradient(
     100deg,
     color-mix(in oklab, white 4%, transparent) 20%,
-    color-mix(in oklab, var(--color-violet) 14%, transparent) 42%,
+    color-mix(in oklab, white 9%, transparent) 42%,
     color-mix(in oklab, white 4%, transparent) 64%
   );
   background-size: 220% 100%;
@@ -277,41 +423,6 @@
   }
   to {
     background-position: -40% 0;
-  }
-}
-
-/* ==========================================================================
-   Auroras del fondo — deriva muy lenta y desfasada entre capas, para que el
-   fondo nunca repita el mismo estado y aun así no llame la atención.
-   ========================================================================== */
-
-@keyframes aurora-a {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  50% {
-    transform: translate3d(8%, 6%, 0) scale(1.14);
-  }
-}
-
-@keyframes aurora-b {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0) scale(1.06);
-  }
-  50% {
-    transform: translate3d(-9%, 10%, 0) scale(0.94);
-  }
-}
-
-@keyframes aurora-c {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0) scale(0.96);
-  }
-  50% {
-    transform: translate3d(11%, -7%, 0) scale(1.12);
   }
 }
 
@@ -329,13 +440,13 @@
 }
 
 .marquee-track {
-  animation: marquee-drift var(--marquee-duration, 46s) linear infinite;
+  animation: marquee-drift var(--marquee-duration, 52s) linear infinite;
   will-change: transform;
 }
 
 .marquee-mask {
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
 }
 
 /* ==========================================================================
@@ -345,21 +456,20 @@
 @keyframes fab-pulse {
   0% {
     transform: scale(1);
-    opacity: 0.55;
+    opacity: 0.5;
   }
   70% {
-    transform: scale(1.75);
+    transform: scale(1.7);
     opacity: 0;
   }
   100% {
-    transform: scale(1.75);
+    transform: scale(1.7);
     opacity: 0;
   }
 }
 
 /* ==========================================================================
-   Motivo de la elipsis — los tres puntos del glifo ⟨ ··· ⟩ son el lenguaje
-   de "en progreso" del sitio: preloader, scroll, y estados de carga.
+   Motivo de la elipsis — los tres puntos del glifo
    ========================================================================== */
 
 @keyframes ellipsis-pulse {
@@ -380,8 +490,7 @@
 }
 
 /* ==========================================================================
-   Cursor personalizado — se oculta el nativo sólo en dispositivos con puntero
-   fino, para no romper touch ni navegación por teclado.
+   Cursor personalizado — sólo en dispositivos con puntero fino.
    ========================================================================== */
 
 @media (pointer: fine) {

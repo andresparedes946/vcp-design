@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { whatsapp, whatsappHref } from "@/lib/site";
-import { useSiteReady } from "./Preloader";
 
 function WhatsAppGlyph({ className = "" }: { className?: string }) {
   return (
@@ -18,14 +17,13 @@ function WhatsAppGlyph({ className = "" }: { className?: string }) {
  * presupuesto ya escrito para que el contacto empiece con contexto.
  */
 export function WhatsAppFab() {
-  const ready = useSiteReady();
   const [open, setOpen] = useState(false);
 
   return (
     <div className="fixed bottom-5 right-5 z-[120] sm:bottom-8 sm:right-8">
       <motion.div
         initial={{ opacity: 0, scale: 0.4, y: 28 }}
-        animate={ready ? { opacity: 1, scale: 1, y: 0 } : {}}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ delay: 0.45, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         className="relative"
       >
