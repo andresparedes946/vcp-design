@@ -1,4 +1,5 @@
 import { checkoutFlow } from "@/lib/ebooks";
+import { shopifyEnabled } from "@/lib/shopify";
 
 /**
  * Flujo de compra.
@@ -29,8 +30,9 @@ export function CheckoutFlow() {
       </ol>
 
       <p className="t-mono mt-4 text-[0.75rem] text-faint">
-        Hoy los pasos 02 y 03 se resuelven por WhatsApp. El pago automático con tarjeta y
-        Mercado Pago está en camino.
+        {shopifyEnabled
+          ? "El pago se procesa en el checkout seguro de Shopify y el PDF te llega por email."
+          : "Hoy los pasos 02 y 03 se resuelven por WhatsApp. El pago automático con tarjeta y Mercado Pago está en camino."}
       </p>
     </div>
   );

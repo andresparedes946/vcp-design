@@ -9,6 +9,7 @@ import { Cta } from "@/components/Cta";
 import { CheckoutFlow } from "@/components/ebooks/CheckoutFlow";
 import { buyHref, ebooks, getEbook } from "@/lib/ebooks";
 import { site, siteUrl } from "@/lib/site";
+import { shopifyEnabled } from "@/lib/shopify";
 
 /** Las cuatro fichas se generan en el build: son contenido fijo. */
 export function generateStaticParams() {
@@ -163,7 +164,9 @@ export default async function EbookPage({
                         Comprar ebook
                       </Cta>
                       <p className="t-mono text-center text-[0.72rem] text-faint">
-                        Pago y entrega por WhatsApp
+                        {shopifyEnabled
+                          ? "Pago seguro con Shopify · PDF por email"
+                          : "Pago y entrega por WhatsApp"}
                       </p>
                     </div>
                   </div>

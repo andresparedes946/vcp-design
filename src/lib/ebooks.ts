@@ -175,14 +175,20 @@ export const featuredEbook = ebooks.find((book) => book.status === "disponible")
 export const getEbook = (slug: string) => ebooks.find((book) => book.slug === slug);
 
 /**
+ * El botón de compra apunta a `/comprar/[slug]`, que arma el checkout de
+ * Shopify en el momento (ver `lib/shopify.ts`).
+ */
+export const buyHref = (book: Ebook) => `/comprar/${book.slug}`;
+
+/**
  * Compra por WhatsApp.
  *
- * El checkout automático todavía no está: hasta que exista, el botón abre una
- * conversación con el pedido ya escrito. Es preferible a un botón que no hace
- * nada o a un formulario que promete un pago que no se procesa — para un
- * producto de tres dólares, además, el mensaje cierra la venta igual.
+ * El respaldo de `/comprar`: si Shopify no está configurado o falla, el pedido
+ * sale por una conversación con el mensaje ya escrito. Es preferible a un
+ * botón que termina en un error — para un producto de tres dólares, además,
+ * el mensaje cierra la venta igual.
  */
-export const buyHref = (book: Ebook) =>
+export const whatsappBuyHref = (book: Ebook) =>
   `https://wa.me/${whatsapp.number}?text=${encodeURIComponent(
     `Hola, quiero comprar el ebook "${book.title}".`,
   )}`;
