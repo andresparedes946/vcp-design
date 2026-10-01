@@ -3,8 +3,8 @@ import { Bleed, Em, RunningHead, Section } from "@/components/Section";
 import { PageHero } from "@/components/PageHero";
 import { EbookCatalogue } from "@/components/ebooks/EbookCatalogue";
 import { CheckoutFlow } from "@/components/ebooks/CheckoutFlow";
-import { Cta } from "@/components/Cta";
-import { ebooks } from "@/lib/ebooks";
+import { Cta, TextLink } from "@/components/Cta";
+import { ebooks, storeUrl } from "@/lib/ebooks";
 
 export const metadata: Metadata = {
   title: "Ebooks y recursos digitales",
@@ -36,10 +36,15 @@ export default function EbooksPage() {
         lead="Ebooks y recursos digitales creados por VCP Design. Escritos desde lo que aprendimos construyendo productos para otros."
         action={
           disponibles > 0 ? (
-            <p className="t-mono text-[0.8rem] text-faint">
-              {disponibles} disponible{disponibles === 1 ? "" : "s"} ·{" "}
-              {ebooks.length - disponibles} en preparación
-            </p>
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+              <p className="t-mono text-[0.8rem] text-faint">
+                {disponibles} disponible{disponibles === 1 ? "" : "s"} ·{" "}
+                {ebooks.length - disponibles} en preparación
+              </p>
+              <TextLink href={storeUrl} external>
+                Ir a la tienda
+              </TextLink>
+            </div>
           ) : undefined
         }
       />

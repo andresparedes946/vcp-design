@@ -5,7 +5,7 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 import { BookCover } from "../BookCover";
 import { TextLink } from "../Cta";
-import { buyHref, ebookCategories, ebooks } from "@/lib/ebooks";
+import { buyHref, ebookCategories, ebooks, formatPrice } from "@/lib/ebooks";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -134,7 +134,7 @@ export function EbookCatalogue() {
                     {isAvailable ? (
                       <>
                         <span className="t-title text-[1.2rem] text-chrome">
-                          US$ {book.price}
+                          {formatPrice(book)}
                         </span>
                         <TextLink href={buyHref(book)} external>
                           Comprar

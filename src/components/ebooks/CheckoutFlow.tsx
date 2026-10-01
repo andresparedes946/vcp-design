@@ -1,18 +1,15 @@
 import { checkoutFlow } from "@/lib/ebooks";
-import { shopifyEnabled } from "@/lib/shopify";
 
 /**
  * Flujo de compra.
  *
- * El recorrido completo, dibujado antes de estar automatizado: producto,
- * compra, pago y descarga. Mostrarlo cumple dos funciones — le dice al
+ * El recorrido completo: producto, compra, pago y descarga. Le dice al
  * comprador qué va a pasar después de apretar el botón, que es la duda que
- * frena la mayoría de las compras chicas, y deja la estructura lista para
- * cuando se conecte la pasarela de verdad.
+ * frena la mayoría de las compras chicas.
  *
- * La nota del pie no es un descargo legal: es la diferencia entre un
- * comprador que sabe que le va a llegar un mensaje y uno que cree que el sitio
- * se rompió.
+ * La nota del pie anticipa el salto de dominio: el botón lleva a
+ * tienda.vcp-design.com.ar, y quien sabe que va a pasar por ahí no cree que lo
+ * mandaron a otro sitio.
  */
 export function CheckoutFlow() {
   return (
@@ -30,9 +27,8 @@ export function CheckoutFlow() {
       </ol>
 
       <p className="t-mono mt-4 text-[0.75rem] text-faint">
-        {shopifyEnabled
-          ? "El pago se procesa en el checkout seguro de Shopify y el PDF te llega por email."
-          : "Hoy los pasos 02 y 03 se resuelven por WhatsApp. El pago automático con tarjeta y Mercado Pago está en camino."}
+        El pago se procesa en tienda.vcp-design.com.ar, el checkout seguro de Shopify, y el PDF
+        te llega por email apenas se confirma.
       </p>
     </div>
   );

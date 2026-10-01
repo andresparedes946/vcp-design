@@ -7,9 +7,8 @@ import { Reveal } from "@/components/Reveal";
 import { BookCover } from "@/components/BookCover";
 import { Cta } from "@/components/Cta";
 import { CheckoutFlow } from "@/components/ebooks/CheckoutFlow";
-import { buyHref, ebooks, getEbook } from "@/lib/ebooks";
+import { buyHref, ebooks, formatPrice, getEbook } from "@/lib/ebooks";
 import { site, siteUrl } from "@/lib/site";
-import { shopifyEnabled } from "@/lib/shopify";
 
 /** Las cuatro fichas se generan en el build: son contenido fijo. */
 export function generateStaticParams() {
@@ -85,7 +84,7 @@ export default async function EbookPage({
           offers: {
             "@type": "Offer",
             price: String(book.price),
-            priceCurrency: "USD",
+            priceCurrency: book.currency ?? "ARS",
             availability: "https://schema.org/InStock",
             url: `${siteUrl}/ebooks/${book.slug}`,
           },
@@ -143,7 +142,7 @@ export default async function EbookPage({
                       <div>
                         <dt className="t-label text-faint">Precio</dt>
                         <dd className="t-title mt-2 text-[2rem] text-chrome">
-                          US$ {book.price}
+                          {formatPrice(book)}
                         </dd>
                       </div>
                       <div className="text-right">
@@ -164,9 +163,7 @@ export default async function EbookPage({
                         Comprar ebook
                       </Cta>
                       <p className="t-mono text-center text-[0.72rem] text-faint">
-                        {shopifyEnabled
-                          ? "Pago seguro con Shopify · PDF por email"
-                          : "Pago y entrega por WhatsApp"}
+                        Pago seguro en la tienda · PDF por email
                       </p>
                     </div>
                   </div>

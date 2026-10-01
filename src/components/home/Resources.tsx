@@ -3,7 +3,7 @@ import { Section, RunningHead, SectionHeader, Em } from "../Section";
 import { Reveal, Stagger, StaggerItem } from "../Reveal";
 import { BookCover } from "../BookCover";
 import { Cta, TextLink } from "../Cta";
-import { buyHref, ebooks, featuredEbook } from "@/lib/ebooks";
+import { buyHref, ebooks, featuredEbook, formatPrice } from "@/lib/ebooks";
 
 /**
  * Publicaciones.
@@ -71,7 +71,7 @@ export function Resources() {
               <div>
                 <dt className="t-label text-faint">Precio</dt>
                 <dd className="t-title mt-1.5 text-[1.6rem] text-chrome">
-                  US$ {featuredEbook.price}
+                  {formatPrice(featuredEbook)}
                 </dd>
               </div>
             </dl>
